@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commande confirmée — VIDUK</title>
+<link rel="icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#050505;color:#f0f0f0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#0f0f0f;border:1px solid rgba(192,192,192,.1);border-radius:16px;padding:60px 40px;text-align:center;max-width:500px;width:100%}
+.check{width:80px;height:80px;border-radius:50%;background:rgba(74,222,128,.1);border:2px solid #4ade80;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:2.5rem;color:#4ade80}
+h1{font-size:1.8rem;font-weight:800;margin-bottom:12px}
+p{color:#888;font-size:1rem;line-height:1.6;margin-bottom:24px}
+a{display:inline-block;background:linear-gradient(135deg,#4a9eff,#2d7dd2);color:#fff;padding:14px 36px;border-radius:50px;font-weight:700;text-decoration:none;transition:.3s}
+a:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(74,158,255,.3)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="check">&#10003;</div>
+  <h1>Merci pour votre commande!</h1>
+  <p>Votre paiement a été traité avec succès. Vous recevrez un courriel de confirmation sous peu avec les détails de votre commande et le suivi de livraison.</p>
+  <a href="/">Retour à la boutique</a>
+</div>
+<script>
+// Clear cart after successful purchase
+localStorage.removeItem('viduk_cart');
+</script>
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIDUK — To Secure Your World</title>
+<meta name="description" content="VIDUK — Sécurité intelligente pour protéger votre maison et vos biens. Caméras haute technologie, capteurs intelligents.">
+<link rel="icon" href="img/logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--cyan:#00d4ff;--cyan-g:rgba(0,212,255,.15);--dark:#030308;--card:#0a0e1a;
+--silver:#b8c4d0;--white:#f0f4f8;--gold:#ffd700;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--silver);overflow-x:hidden}
+
+/* ═══ HERO ═══ */
+.hero{
+  position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;text-align:center;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('img/hero-camera-bg.png') center center/cover no-repeat;
+  z-index:0;
+}
+.hero-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(0,212,255,.08) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(3,3,8,.3) 0%, rgba(3,3,8,.65) 40%, rgba(3,3,8,.92) 75%, var(--dark) 100%);
+}
+.hero-scanline{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,.015) 2px,rgba(0,212,255,.015) 4px);
+}
+.hero-content{position:relative;z-index:3;padding:4rem 2rem 2rem;max-width:900px;margin-top:0;}
+
+.hero-logo{
+  width:80px;height:80px;margin:0 auto .8rem;
+  filter:drop-shadow(0 0 20px rgba(0,212,255,.4)) drop-shadow(0 0 40px rgba(0,212,255,.2));
+  animation:logoPulse 4s ease-in-out infinite;
+}
+.hero-logo img{width:100%;height:100%;object-fit:contain}
+@keyframes logoPulse{
+  0%,100%{filter:drop-shadow(0 0 20px rgba(0,212,255,.4)) drop-shadow(0 0 40px rgba(0,212,255,.2))}
+  50%{filter:drop-shadow(0 0 35px rgba(0,212,255,.6)) drop-shadow(0 0 60px rgba(0,212,255,.35))}
+}
+
+.hero-brand{
+  font-family:'Orbitron',monospace;font-size:3rem;font-weight:800;
+  letter-spacing:.25em;
+  background:linear-gradient(135deg,#fff 0%,var(--cyan) 50%,#fff 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:textShine 5s linear infinite;
+  margin-bottom:.4rem;
+}
+@keyframes textShine{to{background-position:200% center}}
+
+.hero-tagline{
+  font-family:'Orbitron',monospace;font-size:1rem;font-weight:400;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(0,212,255,.6);margin-bottom:2.5rem;
+}
+
+.hero-cta{
+  display:inline-block;padding:1rem 3rem;
+  font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;text-decoration:none;
+  background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(0,212,255,.05));
+  border:1px solid rgba(0,212,255,.5);border-radius:4px;
+  transition:all .4s;position:relative;overflow:hidden;
+}
+.hero-cta::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(0,212,255,.2),transparent);
+  transition:left .6s;
+}
+.hero-cta:hover{
+  background:linear-gradient(135deg,rgba(0,212,255,.35),rgba(0,212,255,.15));
+  border-color:var(--cyan);box-shadow:0 0 30px rgba(0,212,255,.3);
+}
+.hero-cta:hover::before{left:100%}
+
+.scroll-indicator{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:rgba(0,212,255,.4);font-size:.7rem;letter-spacing:.15em;
+  font-family:'Orbitron',monospace;animation:scrollBounce 2s ease-in-out infinite;
+}
+.scroll-arrow{width:20px;height:20px;border-right:2px solid rgba(0,212,255,.4);
+  border-bottom:2px solid rgba(0,212,255,.4);transform:rotate(45deg)}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+
+/* ═══ SECTIONS ═══ */
+section{padding:5rem 1.5rem;max-width:1100px;margin:0 auto}
+.section-label{
+  font-family:'Orbitron',monospace;font-size:.75rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.section-label::before,.section-label::after{
+  content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,.3),transparent);
+}
+.section-title{
+  font-family:'Orbitron',monospace;font-size:2.2rem;font-weight:700;
+  color:var(--white);text-align:center;margin-bottom:1rem;
+  line-height:1.3;
+}
+.section-subtitle{
+  text-align:center;color:var(--silver);font-size:1.05rem;line-height:1.8;
+  max-width:800px;margin:0 auto 3rem;
+}
+
+/* ═══ WHY SECURE ═══ */
+.why-block{
+  background:linear-gradient(135deg,rgba(0,212,255,.04),rgba(10,14,26,.8));
+  border:1px solid rgba(0,212,255,.1);border-radius:12px;
+  padding:3rem 2.5rem;margin-bottom:3rem;position:relative;overflow:hidden;
+}
+.why-block::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+}
+.why-text{
+  font-size:1.1rem;line-height:2;color:var(--silver);
+}
+.why-text strong{color:var(--white)}
+.why-text .highlight{color:var(--cyan);font-weight:600}
+
+/* ═══ STATS ═══ */
+.stats-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:3rem 0;
+}
+.stat-card{
+  text-align:center;padding:2.5rem 1.5rem;
+  background:linear-gradient(180deg,rgba(0,212,255,.06),rgba(10,14,26,.9));
+  border:1px solid rgba(0,212,255,.12);border-radius:12px;
+  position:relative;overflow:hidden;
+  transition:transform .3s,border-color .3s;
+}
+.stat-card:hover{transform:translateY(-5px);border-color:rgba(0,212,255,.35)}
+.stat-card::after{
+  content:'';position:absolute;bottom:0;left:25%;right:25%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.5;
+}
+.stat-number{
+  font-family:'Orbitron',monospace;font-size:2.8rem;font-weight:800;
+  color:var(--cyan);margin-bottom:.5rem;
+  text-shadow:0 0 20px rgba(0,212,255,.3);
+}
+.stat-label{font-size:.95rem;color:var(--silver);line-height:1.5}
+
+/* ═══ PILLARS ═══ */
+.pillars-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
+.pillar{
+  padding:2.5rem 2rem;
+  background:linear-gradient(135deg,rgba(10,14,26,.95),rgba(0,212,255,.03));
+  border:1px solid rgba(0,212,255,.1);border-radius:12px;
+  transition:border-color .3s,transform .3s;
+}
+.pillar:hover{border-color:rgba(0,212,255,.3);transform:translateY(-3px)}
+.pillar-icon{
+  font-size:2.2rem;margin-bottom:1rem;
+  filter:drop-shadow(0 0 8px rgba(0,212,255,.3));
+}
+.pillar-title{
+  font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
+  color:var(--white);margin-bottom:.75rem;letter-spacing:.05em;
+}
+.pillar-text{font-size:.95rem;color:var(--silver);line-height:1.7}
+
+/* ═══ PROMISE ═══ */
+.promise{
+  text-align:center;padding:5rem 2rem;
+  background:radial-gradient(ellipse at center,rgba(0,212,255,.06),transparent 70%);
+  border-top:1px solid rgba(0,212,255,.08);
+  border-bottom:1px solid rgba(0,212,255,.08);
+}
+.promise-text{
+  font-size:1.2rem;line-height:2;color:var(--silver);
+  max-width:750px;margin:0 auto 2.5rem;
+}
+.promise-text strong{color:var(--white)}
+
+/* ═══ FOOTER ═══ */
+footer{
+  text-align:center;padding:3rem 1.5rem;
+  border-top:1px solid rgba(0,212,255,.08);
+  color:rgba(184,196,208,.4);font-size:.8rem;
+}
+footer a{color:rgba(0,212,255,.5);text-decoration:none}
+
+/* ═══ LANGUAGE TOGGLE ═══ */
+.lang-toggle{
+  position:fixed;top:1.5rem;right:1.5rem;z-index:100;
+  display:flex;gap:0;border:1px solid rgba(0,212,255,.25);border-radius:4px;overflow:hidden;
+}
+.lang-btn{
+  padding:.5rem 1rem;font-family:'Orbitron',monospace;font-size:.7rem;font-weight:600;
+  letter-spacing:.1em;background:rgba(3,3,8,.8);color:rgba(184,196,208,.5);
+  border:none;cursor:pointer;transition:all .3s;
+}
+.lang-btn.active{background:rgba(0,212,255,.15);color:var(--cyan)}
+
+/* ═══ NAV BAR (slim) ═══ */
+.nav-slim{
+  position:fixed;top:0;left:0;right:0;z-index:90;
+  padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(3,3,8,.85);backdrop-filter:blur(15px);
+  border-bottom:1px solid rgba(0,212,255,.08);
+  transform:translateY(-100%);transition:transform .4s;
+}
+.nav-slim.visible{transform:translateY(0)}
+.nav-slim-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nav-slim-logo img{height:32px;filter:drop-shadow(0 0 8px rgba(0,212,255,.3))}
+.nav-slim-logo span{
+  font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
+  color:var(--white);letter-spacing:.1em;
+}
+.nav-slim-cta{
+  padding:.6rem 1.5rem;font-family:'Orbitron',monospace;font-size:.7rem;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;text-decoration:none;
+  background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.4);
+  border-radius:4px;transition:all .3s;
+}
+.nav-slim-cta:hover{background:rgba(0,212,255,.3);border-color:var(--cyan)}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .hero-brand{font-size:2.5rem;letter-spacing:.1em}
+  .hero-tagline{font-size:.9rem;letter-spacing:.15em}
+  .hero-logo{width:100px;height:100px}
+  .stats-grid{grid-template-columns:1fr;gap:1rem}
+  .pillars-grid{grid-template-columns:1fr}
+  .section-title{font-size:1.6rem}
+  .why-block{padding:2rem 1.5rem}
+  .hero-cta{padding:.8rem 2rem;font-size:.85rem}
+  section{padding:3.5rem 1.2rem}
+  .lang-toggle{top:1rem;right:1rem}
+}
+
+/* ═══ PARTICLES ═══ */
+.particles{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.particle{
+  position:absolute;width:3px;height:3px;background:var(--cyan);border-radius:50%;
+  opacity:0;animation:particleFade 6s ease-in-out infinite;
+}
+@keyframes particleFade{
+  0%{opacity:0;transform:translateY(0)}
+  20%{opacity:.6}
+  80%{opacity:.3}
+  100%{opacity:0;transform:translateY(-120px)}
+}
+
+/* hide by lang */
+[data-lang="fr"] .en{display:none!important}
+[data-lang="en"] .fr{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- Language Toggle -->
+<div class="lang-toggle">
+  <button class="lang-btn active" onclick="setLang('fr')" id="btn-fr">FR</button>
+  <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+</div>
+
+<!-- Slim Nav (appears on scroll) -->
+<nav class="nav-slim" id="navSlim">
+  <a href="#" class="nav-slim-logo">
+    <img src="img/logo.png" alt="VIDUK">
+    <span>VIDUK</span>
+  </a>
+  <a href="shop.html" class="nav-slim-cta">
+    <span class="fr">Voir les produits</span>
+    <span class="en">View Products</span>
+  </a>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-scanline"></div>
+  <div class="particles" id="particles"></div>
+
+  <div style="position:absolute;top:1.5rem;left:1.5rem;z-index:10;">
+    <img src="img/logo.png" alt="VIDUK" style="height:90px;width:auto;filter:drop-shadow(0 0 12px rgba(0,212,255,.7)) drop-shadow(0 0 25px rgba(0,212,255,.4)) drop-shadow(0 0 45px rgba(0,212,255,.2));">
+  </div>
+  <div class="hero-content" style="position:absolute!important;top:0!important;left:50%!important;transform:translateX(-50%)!important;padding-top:2.5rem!important;">
+    <h1 class="hero-brand" style="font-size:3.5rem!important;margin-bottom:.3rem!important;">VIDUK</h1>
+    <p class="hero-tagline" style="font-size:1rem!important;letter-spacing:.35em!important;margin-bottom:12rem!important;">To Secure Your World</p>
+    <a href="shop.html" class="hero-cta">
+      <span class="fr">Découvrir nos produits</span>
+      <span class="en">Discover Our Products</span>
+    </a>
+  </div>
+
+  <div class="scroll-indicator">
+    <span class="fr">DÉFILER</span>
+    <span class="en">SCROLL</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══════ WHY SECURE ═══════ -->
+<section id="why">
+  <div class="section-label">
+    <span class="fr">La réalité d'aujourd'hui</span>
+    <span class="en">Today's Reality</span>
+  </div>
+
+  <h2 class="section-title">
+    <span class="fr">Pourquoi sécuriser votre maison est devenu essentiel</span>
+    <span class="en">Why Securing Your Home Has Become Essential</span>
+  </h2>
+
+  <div class="why-block">
+    <p class="why-text fr">
+      Chaque jour, des milliers de familles sont victimes de <strong>cambriolages, de vols de colis et d'intrusions</strong>. 
+      Les menaces ne se limitent plus aux quartiers difficiles — <span class="highlight">elles touchent toutes les communautés</span>, 
+      en ville comme en banlieue.<br><br>
+      Les voleurs d'aujourd'hui sont plus audacieux. Ils surveillent les routines, repèrent les maisons sans système 
+      de sécurité visible et frappent <strong>en plein jour</strong>, souvent quand personne n'est à la maison. 
+      Un colis laissé devant la porte? <span class="highlight">Disparu en quelques secondes.</span> Une entrée non surveillée? 
+      <span class="highlight">Une invitation ouverte.</span><br><br>
+      Mais au-delà du vol matériel, c'est le <strong>sentiment de sécurité</strong> qui est en jeu. 
+      Pouvoir partir travailler, aller chercher les enfants ou simplement dormir la nuit 
+      en sachant que votre maison est <span class="highlight">surveillée et protégée</span> — 
+      c'est ça, la vraie tranquillité d'esprit.<br><br>
+      La technologie de sécurité intelligente n'est plus un luxe réservé aux entreprises. 
+      Aujourd'hui, pour <strong>moins que le prix d'un café par jour</strong>, vous pouvez équiper votre maison 
+      d'un système de surveillance complet — <span class="highlight">sans abonnement mensuel, sans installation complexe, 
+      sans technicien</span>. Juste votre téléphone et cinq minutes.
+    </p>
+    <p class="why-text en">
+      Every day, thousands of families fall victim to <strong>break-ins, package theft, and home intrusions</strong>. 
+      Threats are no longer limited to rough neighbourhoods — <span class="highlight">they affect every community</span>, 
+      from downtown to the suburbs.<br><br>
+      Today's criminals are bolder. They study routines, spot homes without visible security systems, 
+      and strike <strong>in broad daylight</strong>, often when nobody is home. 
+      A package left at the door? <span class="highlight">Gone in seconds.</span> An unmonitored entrance? 
+      <span class="highlight">An open invitation.</span><br><br>
+      But beyond material loss, it's the <strong>sense of security</strong> that's at stake. 
+      Being able to go to work, pick up the kids, or simply sleep at night 
+      knowing your home is <span class="highlight">watched and protected</span> — 
+      that's real peace of mind.<br><br>
+      Smart security technology is no longer a luxury reserved for businesses. 
+      Today, for <strong>less than the price of a daily coffee</strong>, you can equip your home 
+      with a complete surveillance system — <span class="highlight">no monthly subscription, no complex installation, 
+      no technician</span>. Just your phone and five minutes.
+    </p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number fr">160K+</div>
+      <div class="stat-number en">2.5M+</div>
+      <div class="stat-label">
+        <span class="fr">Cambriolages par an au Canada</span>
+        <span class="en">Burglaries per year in North America</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">67%</div>
+      <div class="stat-label">
+        <span class="fr">Se produisent quand personne n'est à la maison</span>
+        <span class="en">Happen when nobody is home</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">300%</div>
+      <div class="stat-label">
+        <span class="fr">Plus de risque sans système de sécurité visible</span>
+        <span class="en">Higher risk without a visible security system</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY VIDUK ═══════ -->
+<section id="pillars">
+  <div class="section-label">
+    <span class="fr">L'avantage VIDUK</span>
+    <span class="en">The VIDUK Advantage</span>
+  </div>
+
+  <h2 class="section-title">
+    <span class="fr">Votre sécurité, simplifiée</span>
+    <span class="en">Your Security, Simplified</span>
+  </h2>
+
+  <p class="section-subtitle">
+    <span class="fr">Pas de contrat. Pas d'abonnement. Pas de technicien. Juste de la technologie intelligente qui fonctionne dès la première minute.</span>
+    <span class="en">No contract. No subscription. No technician. Just smart technology that works from minute one.</span>
+  </p>
+
+  <div class="pillars-grid">
+    <div class="pillar">
+      <div class="pillar-icon">🛡</div>
+      <h3 class="pillar-title">
+        <span class="fr">Protection 24/7</span>
+        <span class="en">24/7 Protection</span>
+      </h3>
+      <p class="pillar-text">
+        <span class="fr">Surveillance continue jour et nuit. Alertes instantanées sur votre téléphone dès qu'un mouvement est détecté. Vous gardez toujours un œil, même à des kilomètres.</span>
+        <span class="en">Continuous day and night monitoring. Instant alerts on your phone the moment motion is detected. You always keep an eye on things, even from miles away.</span>
+      </p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">⚡</div>
+      <h3 class="pillar-title">
+        <span class="fr">Installation en 5 minutes</span>
+        <span class="en">5-Minute Setup</span>
+      </h3>
+      <p class="pillar-text">
+        <span class="fr">Connectez à votre WiFi, placez votre caméra, c'est terminé. Aucun câblage complexe, aucun outil nécessaire. N'importe qui peut le faire.</span>
+        <span class="en">Connect to your WiFi, place your camera, done. No complex wiring, no tools needed. Anyone can do it.</span>
+      </p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">∞</div>
+      <h3 class="pillar-title">
+        <span class="fr">Zéro abonnement</span>
+        <span class="en">Zero Subscription</span>
+      </h3>
+      <p class="pillar-text">
+        <span class="fr">Un seul achat, une protection pour la vie. Pas de frais cachés, pas de renouvellement automatique, pas de surprises sur votre carte de crédit.</span>
+        <span class="en">One purchase, lifetime protection. No hidden fees, no auto-renewal, no credit card surprises.</span>
+      </p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">📱</div>
+      <h3 class="pillar-title">
+        <span class="fr">Contrôle total par téléphone</span>
+        <span class="en">Full Phone Control</span>
+      </h3>
+      <p class="pillar-text">
+        <span class="fr">Accédez à toutes vos caméras depuis l'application Tuya Smart. Visionnez en direct, recevez des alertes et parlez via l'intercom — tout depuis votre poche.</span>
+        <span class="en">Access all your cameras from the Tuya Smart app. Watch live, get alerts, and talk through the intercom — all from your pocket.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROMISE / CTA ═══════ -->
+<div class="promise">
+  <div class="section-label">
+    <span class="fr">Notre engagement</span>
+    <span class="en">Our Promise</span>
+  </div>
+
+  <h2 class="section-title">
+    <span class="fr">Protéger ce qui compte le plus</span>
+    <span class="en">Protect What Matters Most</span>
+  </h2>
+
+  <p class="promise-text">
+    <span class="fr">
+      Votre famille. Vos biens. Votre tranquillité d'esprit.<br>
+      Chez <strong>VIDUK</strong>, nous croyons que la sécurité n'est pas un privilège — 
+      c'est un droit. C'est pourquoi nous rendons la technologie de protection 
+      <strong>accessible, simple et abordable</strong> pour tous les foyers canadiens.
+    </span>
+    <span class="en">
+      Your family. Your belongings. Your peace of mind.<br>
+      At <strong>VIDUK</strong>, we believe security isn't a privilege — 
+      it's a right. That's why we make protection technology 
+      <strong>accessible, simple, and affordable</strong> for every Canadian household.
+    </span>
+  </p>
+
+  <a href="shop.html" class="hero-cta">
+    <span class="fr">Voir nos produits</span>
+    <span class="en">View Our Products</span>
+  </a>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <p>&copy; 2026 VIDUK — JM Digital &nbsp;|&nbsp; 
+    <a href="privacy.html"><span class="fr">Confidentialité</span><span class="en">Privacy</span></a> &nbsp;|&nbsp; 
+    <a href="terms.html"><span class="fr">Conditions</span><span class="en">Terms</span></a>
+  </p>
+</footer>
+
+<script>
+// Language toggle
+function setLang(l){
+  document.documentElement.setAttribute('data-lang',l);
+  document.getElementById('btn-fr').classList.toggle('active',l==='fr');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  localStorage.setItem('viduk-lang',l);
+}
+(function(){var l=localStorage.getItem('viduk-lang');if(l)setLang(l)})();
+
+// Slim nav on scroll
+var nav=document.getElementById('navSlim');
+window.addEventListener('scroll',function(){
+  nav.classList.toggle('visible',window.scrollY>window.innerHeight*.6);
+});
+
+// Particles
+(function(){
+  var c=document.getElementById('particles');
+  for(var i=0;i<30;i++){
+    var p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.top=(40+Math.random()*50)+'%';
+    p.style.animationDelay=Math.random()*6+'s';
+    p.style.animationDuration=(4+Math.random()*4)+'s';
+    p.style.width=p.style.height=(1+Math.random()*3)+'px';
+    c.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>

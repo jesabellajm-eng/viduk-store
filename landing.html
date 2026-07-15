@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIDUK — Sécurité Intelligente | Smart Security</title>
+<meta name="description" content="VIDUK – Protégez ce qui compte. Caméras intelligentes et solutions de sécurité modernes pour votre maison.">
+<link rel="icon" href="/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030308;--surface:#0a0a12;--surface2:#12121e;
+  --white:#f0f0f0;--silver:#b0b8c8;--silver-soft:#6a7388;
+  --accent:#4a9eff;--accent2:#00d4ff;--glow:rgba(74,158,255,.3);
+  --glow2:rgba(0,212,255,.2);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--white);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;font-family:inherit}
+
+/* ===== LANG TOGGLE ===== */
+.lang-btn{position:fixed;top:20px;right:20px;z-index:100;background:rgba(10,10,18,.7);backdrop-filter:blur(12px);border:1px solid rgba(74,158,255,.2);color:var(--silver);padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:600;letter-spacing:1px;transition:.3s}
+.lang-btn:hover{border-color:var(--accent);color:var(--white)}
+
+/* ===== PARTICLES CANVAS ===== */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* ===== HERO LANDING ===== */
+.hero-landing{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;z-index:1;overflow:hidden}
+
+/* Animated glow orbs */
+.glow-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:orbFloat 8s ease-in-out infinite}
+.glow-orb.orb1{width:500px;height:500px;background:rgba(74,158,255,.08);top:-10%;left:-10%;animation-delay:0s}
+.glow-orb.orb2{width:400px;height:400px;background:rgba(0,212,255,.06);bottom:-5%;right:-10%;animation-delay:2s}
+.glow-orb.orb3{width:300px;height:300px;background:rgba(74,158,255,.05);top:40%;right:20%;animation-delay:4s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(30px,-20px) scale(1.1)}50%{transform:translate(-20px,30px) scale(.95)}75%{transform:translate(20px,20px) scale(1.05)}}
+
+/* Light rays */
+.light-rays{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;pointer-events:none}
+.light-rays::before,.light-rays::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.light-rays::before{width:1px;height:200%;background:linear-gradient(180deg,transparent,rgba(74,158,255,.06),rgba(0,212,255,.1),rgba(74,158,255,.06),transparent);animation:rayRotate 12s linear infinite}
+.light-rays::after{width:200%;height:1px;background:linear-gradient(90deg,transparent,rgba(74,158,255,.04),rgba(0,212,255,.08),rgba(74,158,255,.04),transparent);animation:rayRotate 15s linear infinite reverse}
+@keyframes rayRotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Scan lines */
+.scan-line{position:absolute;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(0,212,255,.15),rgba(74,158,255,.25),rgba(0,212,255,.15),transparent);animation:scanDown 6s ease-in-out infinite;pointer-events:none;z-index:2}
+@keyframes scanDown{0%{top:-2px;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+
+/* Logo */
+.hero-logo-wrap{position:relative;margin-bottom:30px;animation:logoAppear 1.5s ease-out}
+@keyframes logoAppear{from{opacity:0;transform:scale(.6) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.hero-logo{width:160px;height:160px;object-fit:contain;filter:drop-shadow(0 0 40px rgba(74,158,255,.3)) drop-shadow(0 0 80px rgba(0,212,255,.15));animation:logoPulse 4s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 40px rgba(74,158,255,.3)) drop-shadow(0 0 80px rgba(0,212,255,.15))}50%{filter:drop-shadow(0 0 60px rgba(74,158,255,.5)) drop-shadow(0 0 100px rgba(0,212,255,.25))}}
+
+/* Ring effect around logo */
+.logo-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:220px;height:220px;border:1px solid rgba(74,158,255,.15);border-radius:50%;animation:ringPulse 3s ease-in-out infinite}
+.logo-ring:nth-child(2){width:280px;height:280px;border-color:rgba(0,212,255,.08);animation-delay:1s}
+@keyframes ringPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.1);opacity:.4}}
+
+/* Brand name */
+.brand-name{font-family:'Orbitron',monospace;font-size:3.5rem;font-weight:800;letter-spacing:12px;background:linear-gradient(135deg,#fff 0%,#4a9eff 40%,#00d4ff 60%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;animation:textGlow 3s ease-in-out infinite alternate;text-transform:uppercase}
+@keyframes textGlow{from{text-shadow:0 0 20px rgba(74,158,255,.2)}to{text-shadow:0 0 40px rgba(74,158,255,.4)}}
+
+/* Slogan */
+.slogan{font-size:1.3rem;font-weight:300;color:var(--silver);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px;animation:fadeUp 2s ease-out .5s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Divider line */
+.accent-line{width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),var(--accent),transparent);margin:0 auto 40px;animation:fadeUp 2s ease-out .8s both}
+
+/* Tagline */
+.tagline{max-width:600px;margin:0 auto 50px;font-size:1.05rem;color:var(--silver-soft);line-height:1.8;animation:fadeUp 2s ease-out 1s both}
+
+/* CTA */
+.cta-btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:16px 40px;background:linear-gradient(135deg,rgba(74,158,255,.15),rgba(0,212,255,.1));border:1px solid rgba(74,158,255,.4);color:var(--white);font-size:1rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;border-radius:50px;transition:.4s;overflow:hidden;animation:fadeUp 2s ease-out 1.3s both}
+.cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transition:.6s}
+.cta-btn:hover::before{left:100%}
+.cta-btn:hover{background:linear-gradient(135deg,rgba(74,158,255,.3),rgba(0,212,255,.2));border-color:var(--accent2);box-shadow:0 0 30px rgba(74,158,255,.3),0 0 60px rgba(0,212,255,.1);transform:translateY(-2px)}
+.cta-btn svg{width:20px;height:20px;transition:.3s}
+.cta-btn:hover svg{transform:translateX(4px)}
+
+/* Scroll indicator */
+.scroll-down{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--silver-soft);font-size:.75rem;letter-spacing:2px;animation:fadeUp 2s ease-out 1.8s both}
+.scroll-arrow{width:24px;height:24px;border-right:2px solid var(--silver-soft);border-bottom:2px solid var(--silver-soft);transform:rotate(45deg);animation:scrollBounce 2s ease-in-out infinite}
+@keyframes scrollBounce{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.4}50%{transform:rotate(45deg) translate(5px,5px);opacity:1}}
+
+/* ===== SECTION: WHY SECURITY ===== */
+.section{padding:100px 20px;position:relative;z-index:1}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-family:'Orbitron',monospace;font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.section-title{font-size:2.2rem;font-weight:700;margin-bottom:20px;line-height:1.3}
+.section-title span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-text{font-size:1.05rem;color:var(--silver);line-height:1.9;max-width:800px}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:60px}
+.stat-card{background:linear-gradient(135deg,rgba(10,10,18,.8),rgba(18,18,30,.6));border:1px solid rgba(74,158,255,.1);border-radius:16px;padding:40px 24px;text-align:center;transition:.4s;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);opacity:0;transition:.4s}
+.stat-card:hover{border-color:rgba(74,158,255,.25);transform:translateY(-4px)}
+.stat-card:hover::before{opacity:1}
+.stat-number{font-family:'Orbitron',monospace;font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.stat-label{font-size:.9rem;color:var(--silver);font-weight:400}
+
+/* ===== SECTION: WHY VIDUK ===== */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;margin-top:50px}
+.why-card{background:linear-gradient(135deg,rgba(10,10,18,.8),rgba(18,18,30,.5));border:1px solid rgba(74,158,255,.08);border-radius:16px;padding:36px 30px;transition:.4s}
+.why-card:hover{border-color:rgba(74,158,255,.2);transform:translateY(-3px)}
+.why-icon{font-size:2rem;margin-bottom:16px;display:block;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(74,158,255,.08);border-radius:12px;border:1px solid rgba(74,158,255,.15)}
+.why-icon svg{width:24px;height:24px;stroke:var(--accent2);fill:none;stroke-width:1.5}
+.why-card h3{font-size:1.15rem;font-weight:600;margin-bottom:10px;color:var(--white)}
+.why-card p{font-size:.95rem;color:var(--silver-soft);line-height:1.7}
+
+/* ===== SECTION: PROMISE ===== */
+.promise-section{background:linear-gradient(180deg,transparent,rgba(74,158,255,.03),transparent);text-align:center}
+.promise-text{font-size:1.5rem;font-weight:300;color:var(--silver);max-width:700px;margin:0 auto 40px;line-height:1.8}
+.promise-text strong{color:var(--white);font-weight:600}
+
+/* ===== FOOTER ===== */
+.landing-footer{padding:40px 20px;text-align:center;border-top:1px solid rgba(74,158,255,.08);color:var(--silver-soft);font-size:.85rem;position:relative;z-index:1}
+.landing-footer a{color:var(--accent);transition:.3s}
+.landing-footer a:hover{color:var(--accent2)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .brand-name{font-size:2rem;letter-spacing:6px}
+  .slogan{font-size:1rem;letter-spacing:2px}
+  .hero-logo{width:120px;height:120px}
+  .logo-ring{width:170px;height:170px}
+  .logo-ring:nth-child(2){width:220px;height:220px}
+  .stats-row{grid-template-columns:1fr;gap:16px}
+  .stat-card{padding:28px 20px}
+  .stat-number{font-size:2rem}
+  .why-grid{grid-template-columns:1fr}
+  .section-title{font-size:1.6rem}
+  .promise-text{font-size:1.2rem}
+  .cta-btn{padding:14px 30px;font-size:.9rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Language Toggle -->
+<button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+
+<!-- Particles -->
+<canvas id="particles"></canvas>
+
+<!-- ===== HERO ===== -->
+<section class="hero-landing">
+  <div class="glow-orb orb1"></div>
+  <div class="glow-orb orb2"></div>
+  <div class="glow-orb orb3"></div>
+  <div class="light-rays"></div>
+  <div class="scan-line"></div>
+
+  <div class="hero-logo-wrap">
+    <div class="logo-ring"></div>
+    <div class="logo-ring"></div>
+    <img src="/img/logo.png" alt="VIDUK" class="hero-logo">
+  </div>
+
+  <h1 class="brand-name">VIDUK</h1>
+  <p class="slogan" data-fr="Sécurité Intelligente. Protection Moderne." data-en="Smart Security. Modern Protection.">Sécurité Intelligente. Protection Moderne.</p>
+  <div class="accent-line"></div>
+  <p class="tagline" data-fr="Parce que protéger votre foyer ne devrait jamais être compliqué. Technologie accessible, surveillance 24/7, tranquillité d'esprit." data-en="Because protecting your home should never be complicated. Accessible technology, 24/7 monitoring, peace of mind.">Parce que protéger votre foyer ne devrait jamais être compliqué. Technologie accessible, surveillance 24/7, tranquillité d'esprit.</p>
+
+  <a href="shop.html" class="cta-btn">
+    <span data-fr="Découvrir nos produits" data-en="Discover our products">Découvrir nos produits</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+
+  <div class="scroll-down">
+    <span data-fr="Défiler" data-en="Scroll">Défiler</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== WHY SECURITY MATTERS ===== -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label" data-fr="La réalité d'aujourd'hui" data-en="Today's reality">La réalité d'aujourd'hui</p>
+    <h2 class="section-title" data-fr="Nos maisons n'ont jamais été <span>aussi vulnérables</span>" data-en="Our homes have never been <span>this vulnerable</span>">Nos maisons n'ont jamais été <span>aussi vulnérables</span></h2>
+    <p class="section-text" data-fr="Vols par effraction, intrusions, piratage de serrures connectées — les menaces évoluent. Chaque jour au Canada, des centaines de foyers sont ciblés. Vos biens, votre famille, vos souvenirs : tout ce que vous avez construit mérite d'être protégé. La question n'est plus <em>si</em> vous avez besoin de sécurité, mais <em>quand</em> vous allez agir." data-en="Break-ins, intrusions, smart lock hacking — threats are evolving. Every day in Canada, hundreds of homes are targeted. Your belongings, your family, your memories: everything you've built deserves protection. The question is no longer <em>if</em> you need security, but <em>when</em> you'll take action.">Vols par effraction, intrusions, piratage de serrures connectées — les menaces évoluent. Chaque jour au Canada, des centaines de foyers sont ciblés. Vos biens, votre famille, vos souvenirs : tout ce que vous avez construit mérite d'être protégé. La question n'est plus <em>si</em> vous avez besoin de sécurité, mais <em>quand</em> vous allez agir.</p>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number">160K+</div>
+        <p class="stat-label" data-fr="Introductions par effraction par an au Canada" data-en="Home break-ins per year in Canada">Introductions par effraction par an au Canada</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">67%</div>
+        <p class="stat-label" data-fr="Des cambriolages ont lieu quand personne n'est à la maison" data-en="Of burglaries happen when no one is home">Des cambriolages ont lieu quand personne n'est à la maison</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">300%</div>
+        <p class="stat-label" data-fr="Plus de risque sans système de sécurité visible" data-en="Higher risk without a visible security system">Plus de risque sans système de sécurité visible</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY VIDUK ===== -->
+<section class="section" style="padding-top:40px">
+  <div class="section-inner">
+    <p class="section-label" data-fr="Pourquoi VIDUK" data-en="Why VIDUK">Pourquoi VIDUK</p>
+    <h2 class="section-title" data-fr="La sécurité <span>sans compromis</span>" data-en="Security <span>without compromise</span>">La sécurité <span>sans compromis</span></h2>
+    <p class="section-text" data-fr="Des caméras intelligentes et capteurs de pointe, à des prix accessibles. Pas d'abonnement mensuel. Pas d'installation compliquée. Juste la tranquillité d'esprit que vous méritez." data-en="Smart cameras and cutting-edge sensors, at accessible prices. No monthly subscription. No complicated installation. Just the peace of mind you deserve.">Des caméras intelligentes et capteurs de pointe, à des prix accessibles. Pas d'abonnement mensuel. Pas d'installation compliquée. Juste la tranquillité d'esprit que vous méritez.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3 data-fr="Protection 24/7" data-en="24/7 Protection">Protection 24/7</h3>
+        <p data-fr="Surveillance continue, jour et nuit. Vision nocturne, détection de mouvement, alertes instantanées sur votre téléphone." data-en="Continuous monitoring, day and night. Night vision, motion detection, instant alerts on your phone.">Surveillance continue, jour et nuit. Vision nocturne, détection de mouvement, alertes instantanées sur votre téléphone.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3 data-fr="Installation en 5 minutes" data-en="5-Minute Setup">Installation en 5 minutes</h3>
+        <p data-fr="Connexion WiFi, application Tuya Smart, c'est parti. Aucun technicien requis, aucun fil à tirer. Vous êtes autonome." data-en="WiFi connection, Tuya Smart app, you're set. No technician needed, no wires to run. You're in control.">Connexion WiFi, application Tuya Smart, c'est parti. Aucun technicien requis, aucun fil à tirer. Vous êtes autonome.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3 data-fr="Zéro abonnement" data-en="Zero Subscription">Zéro abonnement</h3>
+        <p data-fr="Vous achetez votre équipement, il est à vous. Pas de frais mensuels cachés. Pas de contrat. Liberté totale." data-en="You buy your equipment, it's yours. No hidden monthly fees. No contract. Total freedom.">Vous achetez votre équipement, il est à vous. Pas de frais mensuels cachés. Pas de contrat. Liberté totale.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6a6 6 0 1 0 6 6 6 6 0 0 0-6-6zm0 10a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/></svg></div>
+        <h3 data-fr="Technologie Canadienne" data-en="Canadian Technology">Technologie Canadienne</h3>
+        <p data-fr="Service client basé au Canada, livraison rapide, support en français et en anglais. Une marque d'ici, pour les gens d'ici." data-en="Customer service based in Canada, fast shipping, support in French and English. A local brand, for local people.">Service client basé au Canada, livraison rapide, support en français et en anglais. Une marque d'ici, pour les gens d'ici.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROMISE ===== -->
+<section class="section promise-section">
+  <div class="section-inner" style="text-align:center">
+    <p class="section-label" data-fr="Notre promesse" data-en="Our promise">Notre promesse</p>
+    <h2 class="section-title" style="text-align:center" data-fr="Protégez ce qui compte. <span>Simplement.</span>" data-en="Protect what matters. <span>Simply.</span>">Protégez ce qui compte. <span>Simplement.</span></h2>
+    <p class="promise-text" data-fr="Votre maison est votre refuge. Vos proches sont votre priorité. <strong>VIDUK</strong> vous donne les outils pour veiller sur tout ça — même quand vous n'êtes pas là." data-en="Your home is your refuge. Your loved ones are your priority. <strong>VIDUK</strong> gives you the tools to watch over all of that — even when you're not there.">Votre maison est votre refuge. Vos proches sont votre priorité. <strong>VIDUK</strong> vous donne les outils pour veiller sur tout ça — même quand vous n'êtes pas là.</p>
+
+    <a href="shop.html" class="cta-btn" style="margin-bottom:20px">
+      <span data-fr="Voir la boutique" data-en="View the shop">Voir la boutique</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <p style="color:var(--silver-soft);font-size:.85rem;margin-top:12px" data-fr="Livraison au Canada · Paiement sécurisé Stripe · Support FR/EN" data-en="Shipping in Canada · Secure Stripe payment · FR/EN support">Livraison au Canada · Paiement sécurisé Stripe · Support FR/EN</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="landing-footer">
+  <p>&copy; 2026 VIDUK — <span data-fr="Tous droits réservés" data-en="All rights reserved">Tous droits réservés</span> · <a href="privacy.html" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a> · <a href="terms.html" data-fr="Conditions" data-en="Terms">Conditions</a></p>
+</footer>
+
+<script>
+// ===== PARTICLES =====
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+window.addEventListener('resize',resize);resize();
+
+class Particle{
+  constructor(){this.reset()}
+  reset(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.size=Math.random()*1.5+.5;
+    this.speedX=(Math.random()-.5)*.3;
+    this.speedY=(Math.random()-.5)*.3;
+    this.opacity=Math.random()*.4+.1;
+    this.pulse=Math.random()*Math.PI*2;
+  }
+  update(){
+    this.x+=this.speedX;this.y+=this.speedY;
+    this.pulse+=.02;
+    if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();
+  }
+  draw(){
+    const o=this.opacity*(Math.sin(this.pulse)*.3+.7);
+    ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=`rgba(74,158,255,${o})`;ctx.fill();
+  }
+}
+for(let i=0;i<80;i++)particles.push(new Particle());
+
+function drawLines(){
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<120){
+        ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.strokeStyle=`rgba(74,158,255,${.08*(1-d/120)})`;
+        ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{p.update();p.draw()});
+  drawLines();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ===== LANGUAGE TOGGLE =====
+let currentLang='fr';
+function toggleLang(){
+  currentLang=currentLang==='fr'?'en':'fr';
+  document.getElementById('langBtn').textContent=currentLang==='fr'?'EN':'FR';
+  document.documentElement.setAttribute('data-lang',currentLang);
+  document.querySelectorAll('[data-fr]').forEach(el=>{
+    const text=el.getAttribute('data-'+currentLang);
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=text;
+    else el.innerHTML=text;
+  });
+}
+</script>
+</body>
+</html>
