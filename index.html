@@ -4,99 +4,155 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIDUK — To Secure Your World</title>
-<meta name="description" content="VIDUK — Sécurité intelligente pour protéger votre maison et vos biens. Caméras haute technologie, capteurs intelligents.">
+<meta name="description" content="VIDUK — Sécurité intelligente et équipement créateur. Caméras haute technologie, capteurs intelligents, kits de création de contenu.">
 <link rel="icon" href="img/logo.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
 --cyan:#00d4ff;--cyan-g:rgba(0,212,255,.15);--dark:#030308;--card:#0a0e1a;
---silver:#b8c4d0;--white:#f0f4f8;--gold:#ffd700;
+--silver:#b8c4d0;--white:#f0f4f8;--gold:#ffd700;--purple:#8b5cf6;
 }
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--silver);overflow-x:hidden}
 
-/* ═══ HERO ═══ */
-.hero{
-  position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-start;text-align:center;overflow:hidden;
+/* ═══ NAVBAR ═══ */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(3,3,8,.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(0,212,255,.08);
 }
-.hero-bg{
-  position:absolute;inset:0;
-  background:url('img/hero-camera-bg.png') center center/cover no-repeat;
-  z-index:0;
+.navbar-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.navbar-logo img{height:34px;filter:drop-shadow(0 0 8px rgba(0,212,255,.3))}
+.navbar-logo span{
+  font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;
+  color:var(--white);letter-spacing:.15em;
 }
-.hero-overlay{
-  position:absolute;inset:0;z-index:1;
+.nav-menu{display:flex;align-items:center;gap:1.8rem;list-style:none}
+.nav-menu>li{position:relative}
+.nav-menu>li>a{
+  font-size:.85rem;font-weight:500;color:var(--silver);letter-spacing:.02em;
+  transition:color .3s;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:.3rem;
+}
+.nav-menu>li>a:hover{color:var(--cyan)}
+.dropdown{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);
+  background:rgba(8,10,20,.98);border:1px solid rgba(0,212,255,.15);border-radius:8px;
+  padding:.6rem;min-width:220px;opacity:0;visibility:hidden;transition:all .25s;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+.nav-menu>li:hover .dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.dropdown a{
+  display:block;padding:.6rem .8rem;font-size:.82rem;color:var(--silver);
+  text-decoration:none;border-radius:6px;transition:all .2s;
+}
+.dropdown a:hover{background:rgba(0,212,255,.08);color:var(--cyan)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-lang{display:flex;border:1px solid rgba(0,212,255,.25);border-radius:4px;overflow:hidden}
+.nav-lang button{
+  padding:.4rem .8rem;font-family:'Orbitron',monospace;font-size:.65rem;font-weight:600;
+  letter-spacing:.1em;background:transparent;color:rgba(184,196,208,.5);
+  border:none;cursor:pointer;transition:all .3s;
+}
+.nav-lang button.active{background:rgba(0,212,255,.15);color:var(--cyan)}
+.nav-cart-btn{
+  background:none;border:none;color:var(--silver);font-size:1.15rem;cursor:pointer;
+  position:relative;padding:.3rem;
+}
+.nav-cart-btn:hover{color:var(--cyan)}
+.nav-hamburger{display:none;background:none;border:none;color:var(--white);font-size:1.4rem;cursor:pointer}
+.mobile-nav{
+  display:none;position:fixed;top:60px;left:0;right:0;z-index:190;
+  background:rgba(3,3,8,.98);backdrop-filter:blur(20px);flex-direction:column;
+  padding:1rem 1.2rem 2rem;border-bottom:1px solid rgba(0,212,255,.1);
+  max-height:80vh;overflow-y:auto;
+}
+.mobile-nav.active{display:flex}
+.mobile-nav a{color:var(--silver);padding:.8rem 0;text-decoration:none;font-size:.95rem;border-bottom:1px solid rgba(0,212,255,.05)}
+.mobile-nav .m-sub{padding-left:1rem}
+.mobile-nav .m-sub a{font-size:.85rem;color:rgba(184,196,208,.7)}
+.mobile-nav .m-label{color:var(--cyan);font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:.1em;padding-top:1rem;text-transform:uppercase}
+
+/* ═══ HERO SPLIT ═══ */
+.hero-split{
+  position:relative;width:100%;min-height:100vh;padding-top:60px;
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.hero-half{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:4rem 2rem;overflow:hidden;min-height:calc(100vh - 60px);
+}
+.hero-half.security{
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(0,212,255,.08) 0%, transparent 60%),
-    linear-gradient(180deg, rgba(3,3,8,.3) 0%, rgba(3,3,8,.65) 40%, rgba(3,3,8,.92) 75%, var(--dark) 100%);
+    radial-gradient(ellipse at 50% 30%, rgba(0,90,180,.25) 0%, transparent 60%),
+    linear-gradient(160deg,#020410 0%,#050b1a 50%,#031225 100%);
 }
-.hero-scanline{
-  position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,.015) 2px,rgba(0,212,255,.015) 4px);
+.hero-half.creators{
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(139,92,246,.22) 0%, transparent 60%),
+    linear-gradient(200deg,#0a0414 0%,#0e0a1e 50%,#04030d 100%);
 }
-.hero-content{position:relative;z-index:3;padding:4rem 2rem 2rem;max-width:900px;margin-top:0;}
+.hero-half::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:50px 50px;pointer-events:none;
+}
+.hero-half-divider{
+  position:absolute;top:0;bottom:0;left:50%;width:1px;
+  background:linear-gradient(180deg,transparent,rgba(0,212,255,.3),rgba(139,92,246,.3),transparent);
+  z-index:5;
+}
+.hero-icon{font-size:3rem;margin-bottom:1.2rem;position:relative;z-index:2}
+.security .hero-icon{filter:drop-shadow(0 0 20px rgba(0,150,255,.5))}
+.creators .hero-icon{filter:drop-shadow(0 0 20px rgba(139,92,246,.5))}
+.hero-half-label{
+  font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;
+  margin-bottom:1rem;position:relative;z-index:2;
+}
+.security .hero-half-label{color:rgba(0,180,255,.7)}
+.creators .hero-half-label{color:rgba(180,140,255,.7)}
+.hero-half-title{
+  font-family:'Orbitron',monospace;font-size:2.4rem;font-weight:800;line-height:1.2;
+  color:var(--white);margin-bottom:1.2rem;position:relative;z-index:2;
+}
+.hero-half-text{
+  font-size:1rem;line-height:1.8;color:var(--silver);max-width:400px;margin:0 auto 2rem;
+  position:relative;z-index:2;
+}
+.hero-half-cta{
+  display:inline-block;padding:.9rem 2.4rem;
+  font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:#fff;text-decoration:none;
+  border-radius:4px;transition:all .4s;position:relative;z-index:2;
+}
+.security .hero-half-cta{
+  background:linear-gradient(135deg,rgba(0,150,255,.25),rgba(0,150,255,.08));
+  border:1px solid rgba(0,180,255,.5);
+}
+.security .hero-half-cta:hover{background:linear-gradient(135deg,rgba(0,180,255,.4),rgba(0,180,255,.15));box-shadow:0 0 30px rgba(0,180,255,.3)}
+.creators .hero-half-cta{
+  background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(139,92,246,.08));
+  border:1px solid rgba(160,110,250,.5);
+}
+.creators .hero-half-cta:hover{background:linear-gradient(135deg,rgba(160,110,250,.4),rgba(160,110,250,.15));box-shadow:0 0 30px rgba(160,110,250,.3)}
+.hero-glow-orb{
+  position:absolute;width:300px;height:300px;border-radius:50%;filter:blur(80px);opacity:.35;
+  z-index:1;pointer-events:none;
+}
+.security .hero-glow-orb{background:radial-gradient(circle,rgba(0,150,255,.5),transparent);top:10%;left:10%}
+.creators .hero-glow-orb{background:radial-gradient(circle,rgba(139,92,246,.5),transparent);bottom:10%;right:10%}
 
-.hero-logo{
-  width:80px;height:80px;margin:0 auto .8rem;
-  filter:drop-shadow(0 0 20px rgba(0,212,255,.4)) drop-shadow(0 0 40px rgba(0,212,255,.2));
-  animation:logoPulse 4s ease-in-out infinite;
+/* ═══ TRUST BAR ═══ */
+.trust-bar{
+  display:flex;justify-content:space-around;flex-wrap:wrap;gap:1.5rem;
+  padding:2.5rem 1.5rem;max-width:1100px;margin:0 auto;
+  border-bottom:1px solid rgba(0,212,255,.08);
 }
-.hero-logo img{width:100%;height:100%;object-fit:contain}
-@keyframes logoPulse{
-  0%,100%{filter:drop-shadow(0 0 20px rgba(0,212,255,.4)) drop-shadow(0 0 40px rgba(0,212,255,.2))}
-  50%{filter:drop-shadow(0 0 35px rgba(0,212,255,.6)) drop-shadow(0 0 60px rgba(0,212,255,.35))}
-}
+.trust-bar-item{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--silver)}
+.trust-bar-item .ic{font-size:1.3rem;filter:drop-shadow(0 0 6px rgba(0,212,255,.3))}
 
-.hero-brand{
-  font-family:'Orbitron',monospace;font-size:3rem;font-weight:800;
-  letter-spacing:.25em;
-  background:linear-gradient(135deg,#fff 0%,var(--cyan) 50%,#fff 100%);
-  background-size:200% auto;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:textShine 5s linear infinite;
-  margin-bottom:.4rem;
-}
-@keyframes textShine{to{background-position:200% center}}
-
-.hero-tagline{
-  font-family:'Orbitron',monospace;font-size:1rem;font-weight:400;
-  letter-spacing:.3em;text-transform:uppercase;
-  color:rgba(0,212,255,.6);margin-bottom:2.5rem;
-}
-
-.hero-cta{
-  display:inline-block;padding:1rem 3rem;
-  font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-  color:#fff;text-decoration:none;
-  background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(0,212,255,.05));
-  border:1px solid rgba(0,212,255,.5);border-radius:4px;
-  transition:all .4s;position:relative;overflow:hidden;
-}
-.hero-cta::before{
-  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(0,212,255,.2),transparent);
-  transition:left .6s;
-}
-.hero-cta:hover{
-  background:linear-gradient(135deg,rgba(0,212,255,.35),rgba(0,212,255,.15));
-  border-color:var(--cyan);box-shadow:0 0 30px rgba(0,212,255,.3);
-}
-.hero-cta:hover::before{left:100%}
-
-.scroll-indicator{
-  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;
-  display:flex;flex-direction:column;align-items:center;gap:.5rem;
-  color:rgba(0,212,255,.4);font-size:.7rem;letter-spacing:.15em;
-  font-family:'Orbitron',monospace;animation:scrollBounce 2s ease-in-out infinite;
-}
-.scroll-arrow{width:20px;height:20px;border-right:2px solid rgba(0,212,255,.4);
-  border-bottom:2px solid rgba(0,212,255,.4);transform:rotate(45deg)}
-@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
-
-/* ═══ SECTIONS ═══ */
+/* ═══ SECTIONS (existing) ═══ */
 section{padding:5rem 1.5rem;max-width:1100px;margin:0 auto}
 .section-label{
   font-family:'Orbitron',monospace;font-size:.75rem;letter-spacing:.3em;
@@ -115,6 +171,29 @@ section{padding:5rem 1.5rem;max-width:1100px;margin:0 auto}
   text-align:center;color:var(--silver);font-size:1.05rem;line-height:1.8;
   max-width:800px;margin:0 auto 3rem;
 }
+
+/* ═══ BEST SELLERS ═══ */
+.bestsellers-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:2.5rem;
+}
+.bs-card{
+  text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);
+  border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;display:block;
+}
+.bs-card:hover{border-color:rgba(0,212,255,.4);transform:translateY(-4px)}
+.bs-card img{width:100%;border-radius:12px;margin-bottom:.8rem;aspect-ratio:1;object-fit:cover}
+.bs-card .ph{
+  width:100%;aspect-ratio:1;border-radius:12px;margin-bottom:.8rem;display:flex;
+  align-items:center;justify-content:center;font-size:2.8rem;
+}
+.bs-card .badge{
+  display:inline-block;font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;
+  padding:.2rem .6rem;border-radius:4px;margin-bottom:.5rem;text-transform:uppercase;
+}
+.badge.sec{background:rgba(0,150,255,.15);color:#5ab8ff}
+.badge.cre{background:rgba(139,92,246,.15);color:#b79bff}
+.bs-card .name{color:#fff;font-weight:600;font-size:1rem}
+.bs-card .price{color:#00d4ff;font-size:.9rem;margin-top:.3rem}
 
 /* ═══ WHY SECURE ═══ */
 .why-block{
@@ -186,6 +265,19 @@ section{padding:5rem 1.5rem;max-width:1100px;margin:0 auto}
   max-width:750px;margin:0 auto 2.5rem;
 }
 .promise-text strong{color:var(--white)}
+.hero-cta{
+  display:inline-block;padding:1rem 3rem;
+  font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;text-decoration:none;
+  background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(0,212,255,.05));
+  border:1px solid rgba(0,212,255,.5);border-radius:4px;
+  transition:all .4s;position:relative;overflow:hidden;
+}
+.hero-cta:hover{
+  background:linear-gradient(135deg,rgba(0,212,255,.35),rgba(0,212,255,.15));
+  border-color:var(--cyan);box-shadow:0 0 30px rgba(0,212,255,.3);
+}
 
 /* ═══ FOOTER ═══ */
 footer{
@@ -194,68 +286,26 @@ footer{
   color:rgba(184,196,208,.4);font-size:.8rem;
 }
 footer a{color:rgba(0,212,255,.5);text-decoration:none}
-
-/* ═══ LANGUAGE TOGGLE ═══ */
-.lang-toggle{
-  position:fixed;top:1.5rem;right:1.5rem;z-index:100;
-  display:flex;gap:0;border:1px solid rgba(0,212,255,.25);border-radius:4px;overflow:hidden;
-}
-.lang-btn{
-  padding:.5rem 1rem;font-family:'Orbitron',monospace;font-size:.7rem;font-weight:600;
-  letter-spacing:.1em;background:rgba(3,3,8,.8);color:rgba(184,196,208,.5);
-  border:none;cursor:pointer;transition:all .3s;
-}
-.lang-btn.active{background:rgba(0,212,255,.15);color:var(--cyan)}
-
-/* ═══ NAV BAR (slim) ═══ */
-.nav-slim{
-  position:fixed;top:0;left:0;right:0;z-index:90;
-  padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between;
-  background:rgba(3,3,8,.85);backdrop-filter:blur(15px);
-  border-bottom:1px solid rgba(0,212,255,.08);
-  transform:translateY(-100%);transition:transform .4s;
-}
-.nav-slim.visible{transform:translateY(0)}
-.nav-slim-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
-.nav-slim-logo img{height:32px;filter:drop-shadow(0 0 8px rgba(0,212,255,.3))}
-.nav-slim-logo span{
-  font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
-  color:var(--white);letter-spacing:.1em;
-}
-.nav-slim-cta{
-  padding:.6rem 1.5rem;font-family:'Orbitron',monospace;font-size:.7rem;
-  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:#fff;text-decoration:none;
-  background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.4);
-  border-radius:4px;transition:all .3s;
-}
-.nav-slim-cta:hover{background:rgba(0,212,255,.3);border-color:var(--cyan)}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.2rem;margin-bottom:1.2rem}
 
 /* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  .nav-menu{display:none}
+  .nav-hamburger{display:block}
+  .hero-split{grid-template-columns:1fr}
+  .hero-half-divider{display:none}
+  .hero-half{min-height:80vh;padding:3.5rem 1.5rem}
+}
 @media(max-width:768px){
-  .hero-brand{font-size:2.5rem;letter-spacing:.1em}
-  .hero-tagline{font-size:.9rem;letter-spacing:.15em}
-  .hero-logo{width:100px;height:100px}
+  .hero-half-title{font-size:1.8rem}
   .stats-grid{grid-template-columns:1fr;gap:1rem}
   .pillars-grid{grid-template-columns:1fr}
   .section-title{font-size:1.6rem}
   .why-block{padding:2rem 1.5rem}
   .hero-cta{padding:.8rem 2rem;font-size:.85rem}
   section{padding:3.5rem 1.2rem}
-  .lang-toggle{top:1rem;right:1rem}
-}
-
-/* ═══ PARTICLES ═══ */
-.particles{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
-.particle{
-  position:absolute;width:3px;height:3px;background:var(--cyan);border-radius:50%;
-  opacity:0;animation:particleFade 6s ease-in-out infinite;
-}
-@keyframes particleFade{
-  0%{opacity:0;transform:translateY(0)}
-  20%{opacity:.6}
-  80%{opacity:.3}
-  100%{opacity:0;transform:translateY(-120px)}
+  .trust-bar{gap:1rem;padding:2rem 1rem}
+  .trust-bar-item{font-size:.75rem}
 }
 
 /* hide by lang */
@@ -265,45 +315,132 @@ footer a{color:rgba(0,212,255,.5);text-decoration:none}
 </head>
 <body>
 
-<!-- Language Toggle -->
-<div class="lang-toggle">
-  <button class="lang-btn active" onclick="setLang('fr')" id="btn-fr">FR</button>
-  <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
-</div>
-
-<!-- Slim Nav (appears on scroll) -->
-<nav class="nav-slim" id="navSlim">
-  <a href="#" class="nav-slim-logo">
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">
     <img src="img/logo.png" alt="VIDUK">
     <span>VIDUK</span>
   </a>
-  <a href="shop.html" class="nav-slim-cta">
-    <span class="fr">Voir les produits</span>
-    <span class="en">View Products</span>
-  </a>
+  <ul class="nav-menu">
+    <li><a href="index.html"><span class="fr">Accueil</span><span class="en">Home</span></a></li>
+    <li>
+      <a href="shop.html#security"><span class="fr">Sécurité &amp; Surveillance</span><span class="en">Security &amp; Surveillance</span> ▾</a>
+      <div class="dropdown">
+        <a href="shop.html#security"><span class="fr">Caméras Extérieures</span><span class="en">Outdoor Cameras</span></a>
+        <a href="shop.html#security"><span class="fr">Sonnettes Vidéo</span><span class="en">Video Doorbells</span></a>
+        <a href="shop.html#security"><span class="fr">Caméras Intérieures 360°</span><span class="en">Indoor 360° Cameras</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="shop.html#creators"><span class="fr">Zone Créateurs &amp; Vlog</span><span class="en">Creator &amp; Vlog Zone</span> ▾</a>
+      <div class="dropdown">
+        <a href="shop.html#creators"><span class="fr">Kits Caméras 4K</span><span class="en">4K Camera Kits</span></a>
+        <a href="shop.html#creators"><span class="fr">Trépieds Suivi IA</span><span class="en">AI Tracking Tripods</span></a>
+        <a href="shop.html#creators"><span class="fr">Éclairage &amp; Audio</span><span class="en">Lighting &amp; Audio</span></a>
+      </div>
+    </li>
+    <li><a href="shop.html#contact"><span class="fr">À Propos &amp; Contact</span><span class="en">About &amp; Contact</span></a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-lang">
+      <button class="active" onclick="setLang('fr')" id="btn-fr">FR</button>
+      <button onclick="setLang('en')" id="btn-en">EN</button>
+    </div>
+    <button class="nav-cart-btn" onclick="window.location.href='shop.html'" aria-label="Cart">&#128722;</button>
+    <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">&#9776;</button>
+  </div>
 </nav>
 
-<!-- ═══════ HERO ═══════ -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-scanline"></div>
-  <div class="particles" id="particles"></div>
-
-
-  <div class="hero-content" style="position:absolute!important;top:0!important;left:50%!important;transform:translateX(-50%)!important;padding-top:2.5rem!important;">
-    <h1 class="hero-brand" style="font-size:3.5rem!important;margin-bottom:.3rem!important;">VIDUK</h1>
-    <p class="hero-tagline" style="font-size:1rem!important;letter-spacing:.35em!important;margin-bottom:22rem!important;">To Secure Your World</p>
-    <a href="shop.html" class="hero-cta">
-      <span class="fr">Découvrir nos produits</span>
-      <span class="en">Discover Our Products</span>
-    </a>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html"><span class="fr">Accueil</span><span class="en">Home</span></a>
+  <div class="m-label"><span class="fr">Sécurité &amp; Surveillance</span><span class="en">Security &amp; Surveillance</span></div>
+  <div class="m-sub">
+    <a href="shop.html#security"><span class="fr">Caméras Extérieures</span><span class="en">Outdoor Cameras</span></a>
+    <a href="shop.html#security"><span class="fr">Sonnettes Vidéo</span><span class="en">Video Doorbells</span></a>
+    <a href="shop.html#security"><span class="fr">Caméras Intérieures 360°</span><span class="en">Indoor 360° Cameras</span></a>
   </div>
+  <div class="m-label"><span class="fr">Zone Créateurs &amp; Vlog</span><span class="en">Creator &amp; Vlog Zone</span></div>
+  <div class="m-sub">
+    <a href="shop.html#creators"><span class="fr">Kits Caméras 4K</span><span class="en">4K Camera Kits</span></a>
+    <a href="shop.html#creators"><span class="fr">Trépieds Suivi IA</span><span class="en">AI Tracking Tripods</span></a>
+    <a href="shop.html#creators"><span class="fr">Éclairage &amp; Audio</span><span class="en">Lighting &amp; Audio</span></a>
+  </div>
+  <a href="shop.html#contact"><span class="fr">À Propos &amp; Contact</span><span class="en">About &amp; Contact</span></a>
+</div>
 
-  <div class="scroll-indicator">
-    <span class="fr">DÉFILER</span>
-    <span class="en">SCROLL</span>
-    <div class="scroll-arrow"></div>
+<!-- ═══════ HERO SPLIT ═══════ -->
+<section style="padding:0;max-width:none">
+  <div class="hero-split">
+    <div class="hero-half security">
+      <div class="hero-glow-orb"></div>
+      <div class="hero-half-label"><span class="fr">Sécurité résidentielle</span><span class="en">Home Security</span></div>
+      <div class="hero-icon">🛡️</div>
+      <h2 class="hero-half-title"><span class="fr">Protégez votre monde</span><span class="en">Protect Your World</span></h2>
+      <p class="hero-half-text">
+        <span class="fr">Caméras, capteurs et sonnettes intelligentes pour surveiller votre maison, sans abonnement ni technicien.</span>
+        <span class="en">Smart cameras, sensors and doorbells to watch over your home, no subscription or technician needed.</span>
+      </p>
+      <a href="shop.html#security" class="hero-half-cta"><span class="fr">Explorer la sécurité</span><span class="en">Explore Security</span></a>
+    </div>
+    <div class="hero-half-divider"></div>
+    <div class="hero-half creators">
+      <div class="hero-glow-orb"></div>
+      <div class="hero-half-label"><span class="fr">Création de contenu</span><span class="en">Content Creation</span></div>
+      <div class="hero-icon">🎬</div>
+      <h2 class="hero-half-title"><span class="fr">Propulsez votre contenu</span><span class="en">Power Your Content</span></h2>
+      <p class="hero-half-text">
+        <span class="fr">Caméras 4K, trépieds à suivi IA et éclairage professionnel pour créateurs, vlogueurs et streamers.</span>
+        <span class="en">4K cameras, AI-tracking tripods and pro lighting for creators, vloggers and streamers.</span>
+      </p>
+      <a href="shop.html#creators" class="hero-half-cta"><span class="fr">Explorer le studio</span><span class="en">Explore the Studio</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TRUST BAR ═══════ -->
+<div class="trust-bar">
+  <div class="trust-bar-item"><span class="ic">🚚</span><span class="fr">Livraison Canada</span><span class="en">Canada Shipping</span></div>
+  <div class="trust-bar-item"><span class="ic">🔒</span><span class="fr">Paiement sécurisé Stripe</span><span class="en">Secure Stripe Payment</span></div>
+  <div class="trust-bar-item"><span class="ic">↩️</span><span class="fr">Garantie 30 jours</span><span class="en">30-Day Guarantee</span></div>
+  <div class="trust-bar-item"><span class="ic">💬</span><span class="fr">Support 24h</span><span class="en">24h Support</span></div>
+</div>
+
+<!-- ═══════ BEST SELLERS ═══════ -->
+<section id="bestsellers">
+  <div class="section-label">
+    <span class="fr">Nos meilleures ventes</span>
+    <span class="en">Our Best Sellers</span>
+  </div>
+  <h2 class="section-title">
+    <span class="fr">Deux univers, une seule technologie</span>
+    <span class="en">Two Worlds, One Technology</span>
+  </h2>
+
+  <div class="bestsellers-grid">
+    <a href="shop.html#security" class="bs-card">
+      <img src="img/hero-securesense.png" alt="SecureSense™">
+      <div class="badge sec"><span class="fr">Sécurité</span><span class="en">Security</span></div>
+      <div class="name">SecureSense™</div>
+      <div class="price">$29.99 CAD</div>
+    </a>
+    <a href="shop.html#security" class="bs-card">
+      <img src="img/product-solarcam.png" alt="SolarCam™">
+      <div class="badge sec"><span class="fr">Sécurité</span><span class="en">Security</span></div>
+      <div class="name">SolarCam™</div>
+      <div class="price">$79.99 CAD</div>
+    </a>
+    <a href="shop.html#creators" class="bs-card">
+      <div class="ph" style="background:linear-gradient(135deg,#0a0e1a,#1a1030)">🎬</div>
+      <div class="badge cre"><span class="fr">Créateur</span><span class="en">Creator</span></div>
+      <div class="name"><span class="fr">Kit Caméra 4K Pro</span><span class="en">4K Camera Kit Pro</span></div>
+      <div class="price">$149.99 CAD</div>
+    </a>
+    <a href="shop.html#creators" class="bs-card">
+      <div class="ph" style="background:linear-gradient(135deg,#0a0e1a,#1a1030)">🤖</div>
+      <div class="badge cre"><span class="fr">Créateur</span><span class="en">Creator</span></div>
+      <div class="name"><span class="fr">Trépied Suivi Facial IA</span><span class="en">AI Face-Tracking Tripod</span></div>
+      <div class="price">$89.99 CAD</div>
+    </a>
   </div>
 </section>
 
@@ -321,16 +458,16 @@ footer a{color:rgba(0,212,255,.5);text-decoration:none}
 
   <p class="promise-text">
     <span class="fr">
-      Votre famille. Vos biens. Votre tranquillité d'esprit.<br>
-      Chez <strong>VIDUK</strong>, nous croyons que la sécurité n'est pas un privilège — 
-      c'est un droit. C'est pourquoi nous rendons la technologie de protection 
-      <strong>accessible, simple et abordable</strong> pour tous les foyers canadiens.
+      Votre famille. Vos biens. Votre créativité.<br>
+      Chez <strong>VIDUK</strong>, nous croyons que la sécurité et la création de contenu ne sont pas des privilèges — 
+      ce sont des droits. C'est pourquoi nous rendons cette technologie 
+      <strong>accessible, simple et abordable</strong> pour tous.
     </span>
     <span class="en">
-      Your family. Your belongings. Your peace of mind.<br>
-      At <strong>VIDUK</strong>, we believe security isn't a privilege — 
-      it's a right. That's why we make protection technology 
-      <strong>accessible, simple, and affordable</strong> for every Canadian household.
+      Your family. Your belongings. Your creativity.<br>
+      At <strong>VIDUK</strong>, we believe security and content creation aren't privileges — 
+      they're rights. That's why we make this technology 
+      <strong>accessible, simple, and affordable</strong> for everyone.
     </span>
   </p>
 
@@ -339,61 +476,6 @@ footer a{color:rgba(0,212,255,.5);text-decoration:none}
     <span class="en">View Our Products</span>
   </a>
 </div>
-
-<!-- ═══════ PRODUCTS SHOWCASE ═══════ -->
-<section id="products-showcase">
-  <div class="section-label">
-    <span class="fr">Nos produits</span>
-    <span class="en">Our Products</span>
-  </div>
-  <h2 class="section-title">
-    <span class="fr">Protection intelligente pour chaque besoin</span>
-    <span class="en">Smart Protection for Every Need</span>
-  </h2>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:2.5rem;">
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/hero-securesense.png" alt="SecureSense™" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;">SecureSense™</div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$29.99 CAD</div>
-    </a>
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/product-tuya-indoor.png" alt="Smart Indoor Cam" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;"><span class="fr">Caméra intérieure</span><span class="en">Smart Indoor Cam</span></div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$39.99 CAD</div>
-    </a>
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/product-tuya-outdoor.png" alt="IP66 Outdoor Cam" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;"><span class="fr">Caméra extérieure IP66</span><span class="en">IP66 Outdoor Cam</span></div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$59.99 CAD</div>
-    </a>
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/product-solarcam.png" alt="SolarCam™" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;">SolarCam™</div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$79.99 CAD</div>
-    </a>
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/product-microcam.png" alt="MicroCam™" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;">MicroCam™</div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$34.99 CAD</div>
-    </a>
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/product-360.png" alt="PanoCam 360°" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;">PanoCam 360°</div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$49.99 CAD</div>
-    </a>
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/product-doorbell.png" alt="Smart Doorbell" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;"><span class="fr">Sonnette intelligente</span><span class="en">Smart Doorbell Cam</span></div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$69.99 CAD</div>
-    </a>
-    <a href="shop.html" style="text-decoration:none;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:1.2rem;text-align:center;transition:all .3s;">
-      <img src="img/product-dashcam.png" alt="CarGuard Dashcam" style="width:100%;border-radius:12px;margin-bottom:.8rem;">
-      <div style="color:#fff;font-weight:600;font-size:1rem;">CarGuard™ Dashcam</div>
-      <div style="color:#00d4ff;font-size:.9rem;margin-top:.3rem;">$59.99 CAD</div>
-    </a>
-  </div>
-</section>
 
 <!-- ═══════ WHY VIDUK ═══════ -->
 <section id="pillars">
@@ -538,10 +620,17 @@ footer a{color:rgba(0,212,255,.5);text-decoration:none}
 
 <!-- ═══════ FOOTER ═══════ -->
 <footer>
-  <p>&copy; 2026 VIDUK — JM Digital &nbsp;|&nbsp; 
-    <a href="privacy.html"><span class="fr">Confidentialité</span><span class="en">Privacy</span></a> &nbsp;|&nbsp; 
+  <div class="footer-links">
+    <a href="index.html"><span class="fr">Accueil</span><span class="en">Home</span></a>
+    <a href="shop.html#security"><span class="fr">Sécurité &amp; Surveillance</span><span class="en">Security &amp; Surveillance</span></a>
+    <a href="shop.html#creators"><span class="fr">Zone Créateurs &amp; Vlog</span><span class="en">Creator &amp; Vlog Zone</span></a>
+    <a href="shop.html#contact"><span class="fr">À Propos &amp; Contact</span><span class="en">About &amp; Contact</span></a>
+    <a href="shipping.html"><span class="fr">Politique de Livraison</span><span class="en">Shipping Policy</span></a>
+    <a href="warranty.html"><span class="fr">Garantie &amp; Retours</span><span class="en">Warranty &amp; Returns</span></a>
+    <a href="privacy.html"><span class="fr">Confidentialité</span><span class="en">Privacy</span></a>
     <a href="terms.html"><span class="fr">Conditions</span><span class="en">Terms</span></a>
-  </p>
+  </div>
+  <p>&copy; 2026 VIDUK — JM Digital</p>
 </footer>
 
 <script>
@@ -551,29 +640,14 @@ function setLang(l){
   document.getElementById('btn-fr').classList.toggle('active',l==='fr');
   document.getElementById('btn-en').classList.toggle('active',l==='en');
   localStorage.setItem('viduk-lang',l);
+  localStorage.setItem('viduk_lang',l);
 }
-(function(){var l=localStorage.getItem('viduk-lang');if(l)setLang(l)})();
+(function(){var l=localStorage.getItem('viduk-lang')||localStorage.getItem('viduk_lang');if(l)setLang(l)})();
 
-// Slim nav on scroll
-var nav=document.getElementById('navSlim');
-window.addEventListener('scroll',function(){
-  nav.classList.toggle('visible',window.scrollY>window.innerHeight*.6);
-});
-
-// Particles
-(function(){
-  var c=document.getElementById('particles');
-  for(var i=0;i<30;i++){
-    var p=document.createElement('div');
-    p.className='particle';
-    p.style.left=Math.random()*100+'%';
-    p.style.top=(40+Math.random()*50)+'%';
-    p.style.animationDelay=Math.random()*6+'s';
-    p.style.animationDuration=(4+Math.random()*4)+'s';
-    p.style.width=p.style.height=(1+Math.random()*3)+'px';
-    c.appendChild(p);
-  }
-})();
+// Mobile nav
+function toggleMobileNav(){
+  document.getElementById('mobileNav').classList.toggle('active');
+}
 </script>
 </body>
 </html>

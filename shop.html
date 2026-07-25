@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIDUK — Boutique | Shop</title>
-<meta name="description" content="VIDUK – Caméras intelligentes et solutions de sécurité modernes. Magasinez notre collection complète.">
-<link rel="icon" href="/favicon.ico">
+<meta name="description" content="VIDUK – Caméras intelligentes, solutions de sécurité et équipement de création de contenu. Magasinez notre collection complète.">
+<link rel="icon" href="img/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -14,7 +14,7 @@
   --bg:#030308;--surface:#0a0a12;--surface2:#12121e;--surface3:#1a1a2a;
   --silver:#c0c0c0;--silver-soft:#6a6a80;--white:#f0f0f5;
   --accent:#00a8ff;--accent2:#0066ff;--accent-glow:rgba(0,168,255,.12);
-  --cyan:#00e5ff;--purple:#8b5cf6;--neon:#00ff88;
+  --cyan:#00e5ff;--purple:#8b5cf6;--purple2:#6d28d9;--neon:#00ff88;
   --radius:16px;--transition:.3s ease;
 }
 html{scroll-behavior:smooth;font-size:16px}
@@ -31,7 +31,6 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
   radial-gradient(ellipse 400px 400px at 50% 90%, rgba(0,229,255,.02) 0%, transparent 70%);
 pointer-events:none;z-index:0}
 
-/* Grid pattern overlay */
 body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;
 background-image:linear-gradient(rgba(0,168,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,168,255,.03) 1px,transparent 1px);
 background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
@@ -40,13 +39,17 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(3,3,8,.88);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,168,255,.1);padding:14px 0}
 .navbar .container{display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo img{height:40px;width:auto;filter:drop-shadow(0 0 8px rgba(0,168,255,.3))}
+.nav-logo img{height:36px;width:auto;filter:drop-shadow(0 0 8px rgba(0,168,255,.3))}
 .nav-logo span{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:3px;color:var(--white);text-shadow:0 0 20px rgba(0,168,255,.3)}
-.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
-.nav-links a{font-size:.88rem;font-weight:500;color:var(--silver-soft);transition:var(--transition);letter-spacing:.5px;position:relative}
-.nav-links a:hover{color:var(--cyan)}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s}
-.nav-links a:hover::after{width:100%}
+.nav-menu{display:flex;align-items:center;gap:22px;list-style:none}
+.nav-menu>li{position:relative}
+.nav-menu>li>a{font-size:.85rem;font-weight:500;color:var(--silver-soft);transition:var(--transition);letter-spacing:.5px;position:relative;display:flex;align-items:center;gap:4px}
+.nav-menu>li>a:hover{color:var(--cyan)}
+.nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(8,10,20,.98);border:1px solid rgba(0,168,255,.15);border-radius:8px;padding:8px;min-width:220px;opacity:0;visibility:hidden;transition:all .25s;box-shadow:0 15px 40px rgba(0,0,0,.5);z-index:50}
+.nav-menu>li:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-dropdown a{display:block;padding:10px 12px;font-size:.82rem;color:var(--silver);border-radius:6px;transition:all .2s}
+.nav-dropdown a:hover{background:rgba(0,168,255,.08);color:var(--cyan)}
+.nav-right{display:flex;align-items:center;gap:14px}
 .nav-cart{position:relative;background:none;color:var(--silver);font-size:1.2rem;padding:8px;transition:var(--transition)}
 .nav-cart:hover{color:var(--cyan)}
 .nav-cart .badge{position:absolute;top:0;right:0;background:var(--accent);color:#fff;font-size:.6rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;box-shadow:0 0 10px rgba(0,168,255,.5)}
@@ -60,18 +63,20 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .shop-hero-content{text-align:center;margin-bottom:1.5rem;position:relative;z-index:2}
 .shop-hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:900;letter-spacing:5px;text-transform:uppercase;margin-bottom:.3rem;color:#fff;text-shadow:0 0 30px rgba(0,212,255,.5),0 0 60px rgba(0,212,255,.2)}
 .shop-hero p{color:var(--silver);font-size:1.1rem;letter-spacing:.3em;text-shadow:0 0 15px rgba(0,212,255,.3)}
-.shop-hero-gallery{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;max-width:900px;width:90%;margin-top:10px}
-.hero-card{flex:1;min-width:200px;max-width:280px;border-radius:16px;overflow:hidden;background:#111;box-shadow:0 4px 24px rgba(0,0,0,.5),0 0 30px rgba(0,212,255,.08);transition:transform .3s,box-shadow .3s}
-.hero-card:hover{transform:translateY(-6px);box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 40px rgba(0,212,255,.15)}
-.hero-card img{width:100%;height:170px;object-fit:cover}
-.hero-card span{display:block;text-align:center;padding:10px 8px;font-size:.85rem;font-weight:600;color:var(--silver);letter-spacing:.5px}
 
 .filter-bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:30px;position:relative;z-index:1}
 .filter-btn{background:rgba(0,168,255,.06);border:1px solid rgba(0,168,255,.12);color:var(--silver-soft);padding:8px 20px;border-radius:50px;font-size:.82rem;font-weight:600;transition:var(--transition);letter-spacing:.5px}
 .filter-btn:hover,.filter-btn.active{background:rgba(0,168,255,.15);border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 20px rgba(0,168,255,.1)}
 
+/* ===== CATEGORY SECTIONS ===== */
+.category-heading{padding:50px 0 10px;text-align:center;position:relative;z-index:1}
+.category-heading h2{font-family:'Orbitron',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;letter-spacing:2px;margin-bottom:8px}
+.category-heading.security h2{color:#5ab8ff}
+.category-heading.creators h2{color:#b79bff}
+.category-heading p{color:var(--silver-soft);font-size:.95rem}
+
 /* ===== PRODUCT SHOWCASE ===== */
-.products{padding:40px 0 80px;position:relative;z-index:1}
+.products{padding:20px 0 60px;position:relative;z-index:1}
 .products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px}
 .product-card{background:var(--surface);border:1px solid rgba(0,168,255,.06);border-radius:var(--radius);overflow:hidden;transition:all .4s ease;cursor:pointer;position:relative}
 .product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .4s}
@@ -80,19 +85,18 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .product-card:hover::before{opacity:1}
 .product-card:hover::after{opacity:1}
 
-/* Product image — BIG & beautiful */
 .product-img-wrap{position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:linear-gradient(180deg,var(--surface2) 0%,var(--bg) 100%)}
 .product-img-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,168,255,.05) 0%,transparent 70%);z-index:1;pointer-events:none}
 .product-img-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(transparent,var(--surface));z-index:2;pointer-events:none}
 .product-img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,filter .6s ease}
 .product-card:hover .product-img{transform:scale(1.08);filter:brightness(1.1)}
+.product-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;transition:transform .6s ease}
+.product-card:hover .product-img-placeholder{transform:scale(1.08)}
 
-/* Scan line effect on hover */
 .scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(0,229,255,.6) 50%,transparent 100%);z-index:3;opacity:0;transition:opacity .3s;pointer-events:none}
 .product-card:hover .scan-line{opacity:1;animation:scanDown 2s linear infinite}
 @keyframes scanDown{0%{top:0}100%{top:100%}}
 
-/* Corner accents */
 .corner-accent{position:absolute;width:20px;height:20px;z-index:3;opacity:0;transition:opacity .4s}
 .corner-accent::before,.corner-accent::after{content:'';position:absolute;background:var(--cyan)}
 .corner-tl{top:12px;left:12px}
@@ -111,6 +115,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 
 .product-info{padding:24px;position:relative}
 .product-tag{display:inline-block;font-family:'Orbitron',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);background:rgba(0,168,255,.08);border:1px solid rgba(0,168,255,.15);padding:4px 12px;border-radius:4px;margin-bottom:10px}
+.product-tag.creator{color:var(--purple);background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.2)}
 .product-name{font-size:1.1rem;font-weight:700;margin-bottom:6px;line-height:1.3;color:var(--white)}
 .product-desc{color:var(--silver-soft);font-size:.85rem;margin-bottom:16px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .product-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -120,8 +125,9 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .btn-add::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 60%);opacity:0;transition:opacity .3s}
 .btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,168,255,.3)}
 .btn-add:hover::before{opacity:1}
+.btn-add.creator{background:linear-gradient(135deg,var(--purple),var(--purple2))}
 
-/* ===== FULL-WIDTH SHOWCASE (every 4th product) ===== */
+/* ===== FULL-WIDTH SHOWCASE (featured) ===== */
 .product-card.featured{grid-column:1 / -1}
 .product-card.featured .product-img-wrap{aspect-ratio:21/9;max-height:400px}
 .product-card.featured .product-info{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 32px}
@@ -139,6 +145,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .modal-img-wrap{position:relative;overflow:hidden;border-radius:20px 0 0 20px;background:linear-gradient(180deg,var(--surface2),var(--bg))}
 .modal-img-wrap::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,168,255,.06),transparent 70%);pointer-events:none}
 .modal-img{width:100%;aspect-ratio:1;object-fit:cover}
+.modal-img-placeholder{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:5rem}
 .modal-details{padding:40px 32px;display:flex;flex-direction:column;justify-content:center}
 .modal-details h2{font-size:1.4rem;font-weight:800;margin-bottom:10px}
 .modal-details .price{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:800;color:var(--cyan);margin-bottom:20px;text-shadow:0 0 20px rgba(0,229,255,.2)}
@@ -209,6 +216,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .cart-items{flex:1;overflow-y:auto;padding:16px 24px}
 .cart-item{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid rgba(0,168,255,.06)}
 .cart-item img{width:70px;height:70px;object-fit:cover;border-radius:10px;border:1px solid rgba(0,168,255,.08)}
+.cart-item .cart-item-ph{width:70px;height:70px;border-radius:10px;border:1px solid rgba(0,168,255,.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
 .cart-item-info{flex:1}
 .cart-item-info h4{font-size:.88rem;font-weight:600;margin-bottom:4px}
 .cart-item-info .price{color:var(--cyan);font-weight:700;font-size:.88rem}
@@ -218,6 +226,15 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .cart-item-qty span{font-size:.9rem;font-weight:600;min-width:20px;text-align:center}
 .cart-item-remove{background:none;color:rgba(255,100,100,.7);font-size:.78rem;border:none;margin-top:4px;transition:var(--transition)}
 .cart-item-remove:hover{color:#ff6464}
+.cart-cross-sell{padding:16px 24px;border-top:1px solid rgba(0,168,255,.08)}
+.cart-cross-sell h4{font-family:'Orbitron',sans-serif;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver-soft);margin-bottom:12px}
+.cross-sell-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(0,168,255,.05)}
+.cross-sell-item .cs-info{display:flex;align-items:center;gap:10px}
+.cross-sell-item .cs-ph{width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--surface2),var(--surface3));display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.cross-sell-item .cs-name{font-size:.82rem;font-weight:600}
+.cross-sell-item .cs-price{font-size:.76rem;color:var(--cyan)}
+.cross-sell-item button{background:rgba(0,168,255,.1);color:var(--cyan);border:1px solid rgba(0,168,255,.2);padding:6px 14px;border-radius:6px;font-size:.75rem;font-weight:700;transition:var(--transition)}
+.cross-sell-item button:hover{background:rgba(0,168,255,.2)}
 .cart-footer{padding:24px;border-top:1px solid rgba(0,168,255,.08)}
 .cart-total{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:700;margin-bottom:16px}
 .cart-total span:last-child{font-family:'Orbitron',sans-serif;color:var(--cyan)}
@@ -249,7 +266,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
   .trust-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:768px){
-  .nav-links{display:none}
+  .nav-menu{display:none}
   .mobile-menu-btn{display:block}
   .products-grid{grid-template-columns:1fr;gap:20px}
   .product-card.featured .product-info{flex-direction:column}
@@ -258,15 +275,18 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
   .trust-grid{grid-template-columns:repeat(2,1fr);gap:20px}
   .modal-body{grid-template-columns:1fr}
   .modal-img-wrap{border-radius:20px 20px 0 0}
-  .modal-img{max-height:300px}
+  .modal-img,.modal-img-placeholder{max-height:300px}
   .modal-details{padding:24px 20px}
   .footer-grid{grid-template-columns:1fr}
   .contact-card{padding:36px 24px}
   .mobile-nav{display:flex!important}
 }
-.mobile-nav{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(3,3,8,.97);backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:4px;z-index:999;border-bottom:1px solid rgba(0,168,255,.1)}
+.mobile-nav{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(3,3,8,.97);backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:4px;z-index:999;border-bottom:1px solid rgba(0,168,255,.1);max-height:80vh;overflow-y:auto}
 .mobile-nav a{color:var(--silver);font-size:.95rem;font-weight:500;padding:14px 0;border-bottom:1px solid rgba(0,168,255,.04);transition:var(--transition)}
 .mobile-nav a:hover{color:var(--cyan)}
+.mobile-nav .m-sub{padding-left:14px}
+.mobile-nav .m-sub a{font-size:.85rem;color:var(--silver-soft);padding:10px 0}
+.mobile-nav .m-label{color:var(--cyan);font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;padding-top:14px}
 .mobile-nav.active{display:flex}
 
 /* ===== ANIMATIONS ===== */
@@ -289,9 +309,28 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 <nav class="navbar">
   <div class="container">
     <a href="index.html" class="nav-logo">
+      <img src="img/logo.png" alt="VIDUK">
       <span>VIDUK</span>
     </a>
-    <ul class="nav-links">
+    <ul class="nav-menu">
+      <li><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a></li>
+      <li>
+        <a href="#security" data-fr="Sécurité &amp; Surveillance ▾" data-en="Security &amp; Surveillance ▾">Sécurité &amp; Surveillance ▾</a>
+        <div class="nav-dropdown">
+          <a href="#security" data-fr="Caméras Extérieures" data-en="Outdoor Cameras">Caméras Extérieures</a>
+          <a href="#security" data-fr="Sonnettes Vidéo" data-en="Video Doorbells">Sonnettes Vidéo</a>
+          <a href="#security" data-fr="Caméras Intérieures 360°" data-en="Indoor 360° Cameras">Caméras Intérieures 360°</a>
+        </div>
+      </li>
+      <li>
+        <a href="#creators" data-fr="Zone Créateurs &amp; Vlog ▾" data-en="Creator &amp; Vlog Zone ▾">Zone Créateurs &amp; Vlog ▾</a>
+        <div class="nav-dropdown">
+          <a href="#creators" data-fr="Kits Caméras 4K" data-en="4K Camera Kits">Kits Caméras 4K</a>
+          <a href="#creators" data-fr="Trépieds Suivi IA" data-en="AI Tracking Tripods">Trépieds Suivi IA</a>
+          <a href="#creators" data-fr="Éclairage &amp; Audio" data-en="Lighting &amp; Audio">Éclairage &amp; Audio</a>
+        </div>
+      </li>
+      <li><a href="#contact" data-fr="À Propos &amp; Contact" data-en="About &amp; Contact">À Propos &amp; Contact</a></li>
       <li><button class="lang-toggle" onclick="toggleLang()">EN</button></li>
       <li><button class="nav-cart" onclick="toggleCart()" aria-label="Cart">
         &#128722;
@@ -309,19 +348,27 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
   </div>
 </nav>
 <div class="mobile-nav" id="mobileNav">
-  <a href="#products" onclick="closeMobileMenu()" data-fr="Produits" data-en="Products">Produits</a>
+  <a href="index.html" onclick="closeMobileMenu()" data-fr="Accueil" data-en="Home">Accueil</a>
+  <div class="m-label" data-fr="Sécurité &amp; Surveillance" data-en="Security &amp; Surveillance">Sécurité &amp; Surveillance</div>
+  <div class="m-sub">
+    <a href="#security" onclick="closeMobileMenu()" data-fr="Caméras Extérieures" data-en="Outdoor Cameras">Caméras Extérieures</a>
+    <a href="#security" onclick="closeMobileMenu()" data-fr="Sonnettes Vidéo" data-en="Video Doorbells">Sonnettes Vidéo</a>
+    <a href="#security" onclick="closeMobileMenu()" data-fr="Caméras Intérieures 360°" data-en="Indoor 360° Cameras">Caméras Intérieures 360°</a>
+  </div>
+  <div class="m-label" data-fr="Zone Créateurs &amp; Vlog" data-en="Creator &amp; Vlog Zone">Zone Créateurs &amp; Vlog</div>
+  <div class="m-sub">
+    <a href="#creators" onclick="closeMobileMenu()" data-fr="Kits Caméras 4K" data-en="4K Camera Kits">Kits Caméras 4K</a>
+    <a href="#creators" onclick="closeMobileMenu()" data-fr="Trépieds Suivi IA" data-en="AI Tracking Tripods">Trépieds Suivi IA</a>
+    <a href="#creators" onclick="closeMobileMenu()" data-fr="Éclairage &amp; Audio" data-en="Lighting &amp; Audio">Éclairage &amp; Audio</a>
+  </div>
+  <a href="#contact" onclick="closeMobileMenu()" data-fr="À Propos &amp; Contact" data-en="About &amp; Contact">À Propos &amp; Contact</a>
 </div>
 
-<!-- SHOP HERO — LIFESTYLE IMAGES -->
+<!-- SHOP HERO -->
 <section class="shop-hero">
   <div class="shop-hero-content">
     <h1 data-fr="VIDUK" data-en="VIDUK">VIDUK</h1>
-    <p data-fr="Sécurisez votre monde" data-en="To Secure Your World">Sécurisez votre monde</p>
-  </div>
-  <div class="shop-hero-gallery">
-    <div class="hero-card"><img src="img/hero-lifestyle-1.png" alt="Surveillance animal en temps réel"><span data-fr="Surveillez vos animaux" data-en="Watch your pets">Surveillez vos animaux</span></div>
-    <div class="hero-card"><img src="img/hero-lifestyle-2.png" alt="Vue multi-caméras"><span data-fr="Vue multi-caméras" data-en="Multi-camera view">Vue multi-caméras</span></div>
-    <div class="hero-card"><img src="img/hero-lifestyle-3.png" alt="Contrôle depuis tablette"><span data-fr="Contrôle à distance" data-en="Remote control">Contrôle à distance</span></div>
+    <p data-fr="Sécurité intelligente &amp; équipement créateur" data-en="Smart security &amp; creator gear">Sécurité intelligente &amp; équipement créateur</p>
   </div>
 </section>
 
@@ -329,16 +376,38 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 <section style="padding:20px 0 10px;text-align:center;position:relative;z-index:1;">
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterProducts('all')" data-fr="Tout" data-en="All">Tout</button>
-    <button class="filter-btn" onclick="filterProducts('camera')" data-fr="Caméras" data-en="Cameras">Caméras</button>
-    <button class="filter-btn" onclick="filterProducts('sensor')" data-fr="Capteurs" data-en="Sensors">Capteurs</button>
-    <button class="filter-btn" onclick="filterProducts('auto')" data-fr="Auto" data-en="Auto">Auto</button>
+    <button class="filter-btn" onclick="filterProducts('security')" data-fr="Sécurité" data-en="Security">Sécurité</button>
+    <button class="filter-btn" onclick="filterProducts('creator')" data-fr="Créateurs" data-en="Creators">Créateurs</button>
   </div>
 </section>
 
-<!-- PRODUCTS -->
-<section class="products" id="products">
+<!-- SECURITY SECTION -->
+<section id="security">
   <div class="container">
-    <div class="products-grid" id="productsGrid"></div>
+    <div class="category-heading security">
+      <h2 data-fr="Sécurité &amp; Surveillance" data-en="Security &amp; Surveillance">Sécurité &amp; Surveillance</h2>
+      <p data-fr="Caméras, capteurs et sonnettes pour protéger votre maison" data-en="Cameras, sensors and doorbells to protect your home">Caméras, capteurs et sonnettes pour protéger votre maison</p>
+    </div>
+  </div>
+  <div class="products">
+    <div class="container">
+      <div class="products-grid" id="securityGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CREATORS SECTION -->
+<section id="creators">
+  <div class="container">
+    <div class="category-heading creators">
+      <h2 data-fr="Zone Créateurs &amp; Vlog" data-en="Creator &amp; Vlog Zone">Zone Créateurs &amp; Vlog</h2>
+      <p data-fr="Caméras 4K, trépieds IA et éclairage pour créateurs de contenu" data-en="4K cameras, AI tripods and lighting for content creators">Caméras 4K, trépieds IA et éclairage pour créateurs de contenu</p>
+    </div>
+  </div>
+  <div class="products">
+    <div class="container">
+      <div class="products-grid" id="creatorsGrid"></div>
+    </div>
   </div>
 </section>
 
@@ -356,7 +425,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
   <div class="container">
     <div class="section-title">
       <h2 data-fr="Pourquoi VIDUK?" data-en="Why VIDUK?">Pourquoi VIDUK?</h2>
-      <p data-fr="La sécurité rendue simple et accessible." data-en="Security made simple and accessible.">La sécurité rendue simple et accessible.</p>
+      <p data-fr="La sécurité et la création de contenu rendues simples et accessibles." data-en="Security and content creation made simple and accessible.">La sécurité et la création de contenu rendues simples et accessibles.</p>
     </div>
     <div class="features-grid">
       <div class="feature-card animate">
@@ -375,9 +444,9 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
         <p data-fr="Branchez, connectez au WiFi, terminé. Aucun technicien requis." data-en="Plug in, connect to WiFi, done. No technician needed.">Branchez, connectez au WiFi, terminé. Aucun technicien requis.</p>
       </div>
       <div class="feature-card animate">
-        <div class="feature-icon">&#128176;</div>
-        <h3 data-fr="Zéro abonnement" data-en="Zero Subscription">Zéro abonnement</h3>
-        <p data-fr="Payez une fois, utilisez pour toujours. Pas de frais mensuels cachés." data-en="Pay once, use forever. No hidden monthly fees.">Payez une fois, utilisez pour toujours. Pas de frais mensuels cachés.</p>
+        <div class="feature-icon">&#127916;</div>
+        <h3 data-fr="Prêt pour créateurs" data-en="Creator Ready">Prêt pour créateurs</h3>
+        <p data-fr="Équipement plug &amp; play pour vlog, streaming et tutoriels — aucune expérience requise." data-en="Plug &amp; play gear for vlogging, streaming and tutorials — no experience needed.">Équipement plug &amp; play pour vlog, streaming et tutoriels — aucune expérience requise.</p>
       </div>
     </div>
   </div>
@@ -388,7 +457,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
   <div class="container">
     <div class="trust-grid">
       <div class="trust-item animate">
-        <div class="trust-num">8</div>
+        <div class="trust-num">12</div>
         <p data-fr="Produits sélectionnés" data-en="Selected products">Produits sélectionnés</p>
       </div>
       <div class="trust-item animate">
@@ -422,7 +491,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
           <span class="faq-text" data-fr="Comment fonctionne la livraison?" data-en="How does shipping work?">Comment fonctionne la livraison?</span>
           <span class="arrow">+</span>
         </div>
-        <div class="faq-a" data-fr="Nous livrons partout au Canada et à l'international. Les délais varient de 7 à 15 jours ouvrables selon votre localisation. Un numéro de suivi vous est envoyé par courriel dès l'expédition." data-en="We ship across Canada and internationally. Delivery takes 7 to 15 business days depending on your location. A tracking number is emailed to you once shipped.">Nous livrons partout au Canada et à l'international. Les délais varient de 7 à 15 jours ouvrables selon votre localisation. Un numéro de suivi vous est envoyé par courriel dès l'expédition.</div>
+        <div class="faq-a" data-fr="Nous livrons partout au Canada et à l'international. Les délais varient de 7 à 15 jours ouvrables selon votre localisation. Un numéro de suivi vous est envoyé par courriel dès l'expédition. Voir notre politique de livraison." data-en="We ship across Canada and internationally. Delivery takes 7 to 15 business days depending on your location. A tracking number is emailed to you once shipped. See our shipping policy.">Nous livrons partout au Canada et à l'international. Les délais varient de 7 à 15 jours ouvrables selon votre localisation. Un numéro de suivi vous est envoyé par courriel dès l'expédition.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -433,10 +502,17 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-text" data-fr="Le kit créateur convient-il aux débutants?" data-en="Is the creator gear beginner-friendly?">Le kit créateur convient-il aux débutants?</span>
+          <span class="arrow">+</span>
+        </div>
+        <div class="faq-a" data-fr="Absolument. Notre équipement créateur est conçu plug &amp; play — aucune expérience en vidéo n'est requise. Branchez, filmez, publiez." data-en="Absolutely. Our creator gear is designed plug &amp; play — no video experience required. Plug in, film, publish.">Absolument. Notre équipement créateur est conçu plug &amp; play — aucune expérience en vidéo n'est requise.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
           <span class="faq-text" data-fr="Offrez-vous un remboursement?" data-en="Do you offer refunds?">Offrez-vous un remboursement?</span>
           <span class="arrow">+</span>
         </div>
-        <div class="faq-a" data-fr="Oui, nous offrons une garantie satisfait ou remboursé de 30 jours. Si le produit ne vous convient pas, contactez-nous et nous vous rembourserons intégralement." data-en="Yes, we offer a 30-day satisfaction guarantee. If the product doesn't meet your expectations, contact us for a full refund.">Oui, nous offrons une garantie satisfait ou remboursé de 30 jours. Si le produit ne vous convient pas, contactez-nous et nous vous rembourserons intégralement.</div>
+        <div class="faq-a" data-fr="Oui, nous offrons une garantie satisfait ou remboursé de 30 jours. Voir notre page Garantie &amp; Retours pour tous les détails." data-en="Yes, we offer a 30-day satisfaction guarantee. See our Warranty &amp; Returns page for full details.">Oui, nous offrons une garantie satisfait ou remboursé de 30 jours.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -451,13 +527,6 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
           <span class="arrow">+</span>
         </div>
         <div class="faq-a" data-fr="Oui! Tous nos produits sont conçus pour une installation facile. Supports de montage et vis inclus. Aucun câblage complexe nécessaire — 5 minutes et c'est fait!" data-en="Yes! All our products are designed for easy installation. Mounting brackets and screws included. No complex wiring needed — 5 minutes and you're done!">Oui! Tous nos produits sont conçus pour une installation facile. Supports de montage et vis inclus. Aucun câblage complexe nécessaire — 5 minutes et c'est fait!</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="faq-text" data-fr="Quelle est votre politique de retour?" data-en="What is your return policy?">Quelle est votre politique de retour?</span>
-          <span class="arrow">+</span>
-        </div>
-        <div class="faq-a" data-fr="Vous avez 30 jours pour retourner un produit non satisfaisant. Contactez-nous à info@viduk.de et nous organiserons le retour et le remboursement." data-en="You have 30 days to return an unsatisfactory product. Contact us at info@viduk.de and we'll arrange the return and refund.">Vous avez 30 jours pour retourner un produit non satisfaisant. Contactez-nous à info@viduk.de et nous organiserons le retour et le remboursement.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -504,16 +573,17 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">
-          <img src="/img/logo.png" alt="VIDUK" style="height:36px;filter:drop-shadow(0 0 6px rgba(0,168,255,.2))">
+          <img src="img/logo.png" alt="VIDUK" style="height:36px;filter:drop-shadow(0 0 6px rgba(0,168,255,.2))">
           <span style="font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:3px;color:var(--silver)">VIDUK</span>
         </div>
-        <p data-fr="Technologie de sécurité intelligente, conçue pour protéger ce qui compte le plus." data-en="Smart security technology, designed to protect what matters most.">Technologie de sécurité intelligente, conçue pour protéger ce qui compte le plus.</p>
+        <p data-fr="Technologie de sécurité intelligente et équipement créateur, conçus pour protéger et propulser ce qui compte le plus." data-en="Smart security technology and creator gear, designed to protect and power what matters most.">Technologie de sécurité intelligente et équipement créateur, conçus pour protéger et propulser ce qui compte le plus.</p>
       </div>
       <div>
         <h4 data-fr="Navigation" data-en="Navigation">Navigation</h4>
         <ul class="footer-links">
           <li><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a></li>
-          <li><a href="#products" data-fr="Produits" data-en="Products">Produits</a></li>
+          <li><a href="#security" data-fr="Sécurité &amp; Surveillance" data-en="Security &amp; Surveillance">Sécurité &amp; Surveillance</a></li>
+          <li><a href="#creators" data-fr="Zone Créateurs &amp; Vlog" data-en="Creator &amp; Vlog Zone">Zone Créateurs &amp; Vlog</a></li>
           <li><a href="#features" data-fr="Avantages" data-en="Features">Avantages</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -522,14 +592,16 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
       <div>
         <h4 data-fr="Légal" data-en="Legal">Légal</h4>
         <ul class="footer-links">
-          <li><a href="/privacy.html" data-fr="Confidentialité" data-en="Privacy Policy">Confidentialité</a></li>
-          <li><a href="/terms.html" data-fr="Conditions d'utilisation" data-en="Terms of Use">Conditions d'utilisation</a></li>
+          <li><a href="shipping.html" data-fr="Politique de Livraison" data-en="Shipping Policy">Politique de Livraison</a></li>
+          <li><a href="warranty.html" data-fr="Garantie &amp; Retours" data-en="Warranty &amp; Returns">Garantie &amp; Retours</a></li>
+          <li><a href="privacy.html" data-fr="Confidentialité" data-en="Privacy Policy">Confidentialité</a></li>
+          <li><a href="terms.html" data-fr="Conditions d'utilisation" data-en="Terms of Use">Conditions d'utilisation</a></li>
           <li><a href="mailto:jesabella.jm@gmail.com">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2025 VIDUK. <span data-fr="Tous droits réservés." data-en="All rights reserved.">Tous droits réservés.</span> | <span data-fr="Propulsé par JM Digital" data-en="Powered by JM Digital">Propulsé par JM Digital</span>
+      &copy; 2026 VIDUK. <span data-fr="Tous droits réservés." data-en="All rights reserved.">Tous droits réservés.</span> | <span data-fr="Propulsé par JM Digital" data-en="Powered by JM Digital">Propulsé par JM Digital</span>
     </div>
   </div>
 </footer>
@@ -539,7 +611,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
   <div class="modal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()">&#10005;</button>
     <div class="modal-body">
-      <div class="modal-img-wrap">
+      <div class="modal-img-wrap" id="modalImgWrap">
         <img class="modal-img" id="modalImg" src="" alt="">
       </div>
       <div class="modal-details">
@@ -561,6 +633,10 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
     <button class="modal-close" onclick="toggleCart()">&#10005;</button>
   </div>
   <div class="cart-items" id="cartItems"></div>
+  <div class="cart-cross-sell" id="cartCrossSell" style="display:none">
+    <h4 data-fr="Vous pourriez aussi aimer" data-en="You might also like">Vous pourriez aussi aimer</h4>
+    <div id="crossSellList"></div>
+  </div>
   <div class="cart-footer" id="cartFooter" style="display:none">
     <div class="cart-total">
       <span data-fr="Total" data-en="Total">Total</span>
@@ -582,117 +658,179 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 <script>
 // ===== PRODUCTS DATA =====
 const products = [
+  // ---- SECURITY ----
   {
-    id:'securesense', slug:'sensor-door', category:'sensor',
+    id:'securesense', slug:'sensor-door', type:'security', category:'sensor',
     name_fr:'Capteur d\'ouverture WiFi – SecureSense\u2122',
     name_en:'WiFi Door/Window Sensor – SecureSense\u2122',
-    price:29.99, img:'/img/hero-securesense.png',
+    price:29.99, img:'img/hero-securesense.png',
     tag_fr:'CAPTEUR', tag_en:'SENSOR',
     desc_fr:'Soyez alerté instantanément quand une porte ou fenêtre s\'ouvre. Compatible Tuya Smart, installation sans fil en 2 minutes.',
     desc_en:'Get instant alerts when a door or window opens. Tuya Smart compatible, wireless installation in 2 minutes.',
-    specs_fr:['Connexion WiFi 2.4GHz','Alertes push en temps réel','Compatible Tuya Smart / Smart Life','Pile longue durée incluse','Installation sans outils','Historique des événements'],
-    specs_en:['2.4GHz WiFi connection','Real-time push alerts','Tuya Smart / Smart Life compatible','Long-lasting battery included','Tool-free installation','Event history in app']
+    specs_fr:['Connexion WiFi 2.4GHz','Alertes push en temps réel','Compatible Tuya Smart / Smart Life','Pile longue durée incluse','Installation sans fil','Vision nocturne','Application mobile incluse'],
+    specs_en:['2.4GHz WiFi connection','Real-time push alerts','Tuya Smart / Smart Life compatible','Long-lasting battery included','Wireless installation','Night vision','Mobile app included']
   },
   {
-    id:'indoor-1080', slug:'camera-indoor', category:'camera',
+    id:'indoor-1080', slug:'camera-indoor', type:'security', category:'camera-indoor',
     name_fr:'Caméra WiFi 1080p – Smart Indoor',
     name_en:'WiFi Camera 1080p – Smart Indoor',
-    price:39.99, img:'/img/product-tuya-indoor.png',
+    price:39.99, img:'img/product-tuya-indoor.png',
     tag_fr:'INTÉRIEUR', tag_en:'INDOOR',
     desc_fr:'Vision Full HD jour et nuit. Détection de mouvement intelligente avec notifications instantanées sur votre téléphone.',
     desc_en:'Full HD day and night vision. Smart motion detection with instant notifications on your phone.',
-    specs_fr:['Résolution 1080p Full HD','Vision nocturne infrarouge','Détection de mouvement IA','Audio bidirectionnel','Stockage carte SD + cloud','Rotation 360° motorisée'],
-    specs_en:['1080p Full HD resolution','Infrared night vision','AI motion detection','Two-way audio','SD card + cloud storage','360° motorized rotation']
+    specs_fr:['Résolution 1080p Full HD','Vision nocturne infrarouge','Détection de mouvement IA','Audio bidirectionnel','Installation sans fil','Application mobile incluse'],
+    specs_en:['1080p Full HD resolution','Infrared night vision','AI motion detection','Two-way audio','Wireless installation','Mobile app included']
   },
   {
-    id:'outdoor-ip66', slug:'camera-outdoor', category:'camera',
+    id:'outdoor-ip66', slug:'camera-outdoor', type:'security', category:'camera-outdoor',
     name_fr:'Caméra extérieure étanche IP66 – 1080p',
     name_en:'Outdoor Waterproof Camera IP66 – 1080p',
-    price:59.99, img:'/img/product-tuya-outdoor.png',
+    price:59.99, img:'img/product-tuya-outdoor.png',
     tag_fr:'EXTÉRIEUR', tag_en:'OUTDOOR',
     desc_fr:'Résistante aux intempéries, conçue pour l\'extérieur. Surveillance robuste pluie, neige ou canicule.',
     desc_en:'Weather-resistant, built for outdoors. Robust surveillance in rain, snow or heat.',
-    specs_fr:['Certification étanche IP66','Vision nocturne 30m','Détection de mouvement','Boîtier anti-vandalisme','Support de montage inclus','Compatible Tuya Smart'],
-    specs_en:['IP66 waterproof certification','30m night vision','Motion detection','Anti-vandal housing','Mounting bracket included','Tuya Smart compatible']
+    specs_fr:['Certification étanche IP66','Vision nocturne 30m','Détection de mouvement','Installation sans fil','Application mobile incluse','Compatible Tuya Smart'],
+    specs_en:['IP66 waterproof certification','30m night vision','Motion detection','Wireless installation','Mobile app included','Tuya Smart compatible']
   },
   {
-    id:'solar-cam', slug:'camera-solar', category:'camera', featured:true,
+    id:'solar-cam', slug:'camera-solar', type:'security', category:'camera-solar', featured:true,
     name_fr:'Caméra solaire extérieure – SolarCam\u2122',
     name_en:'Outdoor Solar Camera – SolarCam\u2122',
-    price:79.99, img:'/img/product-solarcam.png',
+    price:79.99, img:'img/product-solarcam.png',
     tag_fr:'SOLAIRE', tag_en:'SOLAR',
     desc_fr:'Zéro câble, zéro facture d\'électricité. Fonctionne à l\'énergie solaire pour une surveillance 100% autonome.',
     desc_en:'Zero cables, zero electricity bill. Solar-powered for 100% autonomous surveillance.',
-    specs_fr:['Panneau solaire intégré','Batterie rechargeable 6000mAh','1080p Full HD','WiFi sans fil','Vision nocturne','Résistante IP65'],
-    specs_en:['Built-in solar panel','6000mAh rechargeable battery','1080p Full HD','Wireless WiFi','Night vision','IP65 weather resistant']
+    specs_fr:['Panneau solaire intégré','Batterie rechargeable 6000mAh','1080p Full HD','Installation sans fil','Vision nocturne','Application mobile incluse'],
+    specs_en:['Built-in solar panel','6000mAh rechargeable battery','1080p Full HD','Wireless installation','Night vision','Mobile app included']
   },
   {
-    id:'micro-cam', slug:'camera-mini-spy', category:'camera',
+    id:'micro-cam', slug:'camera-mini-spy', type:'security', category:'camera-spy',
     name_fr:'Mini caméra espion HD – MicroCam\u2122',
     name_en:'Mini Spy Camera HD – MicroCam\u2122',
-    price:34.99, img:'/img/product-microcam.png',
+    price:34.99, img:'img/product-microcam.png',
     tag_fr:'ESPION', tag_en:'SPY',
     desc_fr:'Ultra-compacte et discrète. Surveillez sans être vu. Parfaite pour la maison, le bureau ou la voiture.',
     desc_en:'Ultra-compact and discreet. Monitor without being seen. Perfect for home, office or car.',
-    specs_fr:['Taille ultra-compacte','Résolution HD 1080p','Vision nocturne','Détection de mouvement','Carte micro SD','Batterie rechargeable'],
-    specs_en:['Ultra-compact size','1080p HD resolution','Night vision','Motion detection','Micro SD card recording','Rechargeable battery']
+    specs_fr:['Taille ultra-compacte','Résolution HD 1080p','Vision nocturne','Détection de mouvement','Installation sans fil','Application mobile incluse'],
+    specs_en:['Ultra-compact size','1080p HD resolution','Night vision','Motion detection','Wireless installation','Mobile app included']
   },
   {
-    id:'pano-360', slug:'camera-360', category:'camera',
+    id:'pano-360', slug:'camera-360', type:'security', category:'camera-360',
     name_fr:'Caméra panoramique 360° – PanoCam',
     name_en:'360° Panoramic Camera – PanoCam',
-    price:49.99, img:'/img/product-360.png',
+    price:49.99, img:'img/product-360.png',
     tag_fr:'360°', tag_en:'360°',
     desc_fr:'Vue à 360° sans angle mort. Couvrez une pièce entière avec une seule caméra.',
     desc_en:'360° view with no blind spots. Cover an entire room with a single camera.',
-    specs_fr:['Vue panoramique 360°','Résolution 1080p','Suivi automatique de mouvement','Audio bidirectionnel','Vision nocturne','Compatible Tuya Smart'],
-    specs_en:['360° panoramic view','1080p resolution','Auto motion tracking','Two-way audio','Night vision','Tuya Smart compatible']
+    specs_fr:['Vue panoramique 360°','Résolution 1080p','Suivi automatique de mouvement','Audio bidirectionnel','Vision nocturne','Application mobile incluse'],
+    specs_en:['360° panoramic view','1080p resolution','Auto motion tracking','Two-way audio','Night vision','Mobile app included']
   },
   {
-    id:'doorbell', slug:'doorbell', category:'camera', featured:true,
+    id:'doorbell', slug:'doorbell', type:'security', category:'doorbell', featured:true,
     name_fr:'Interphone vidéo WiFi – Smart Doorbell Cam',
     name_en:'WiFi Video Intercom – Smart Doorbell Cam',
-    price:69.99, img:'/img/product-doorbell.png',
+    price:69.99, img:'img/product-doorbell.png',
     tag_fr:'INTERCOM', tag_en:'INTERCOM',
     desc_fr:'Voyez et parlez à vos visiteurs depuis votre téléphone, même quand vous n\'êtes pas chez vous.',
     desc_en:'See and talk to visitors from your phone, even when you\'re not home.',
-    specs_fr:['Vidéo HD grand angle','Intercom bidirectionnel','Détection mouvement PIR','Vision nocturne','Notifications push','Installation simple'],
-    specs_en:['Wide-angle HD video','Two-way intercom','PIR motion detection','Night vision','Push notifications','Simple installation']
+    specs_fr:['Vidéo HD grand angle','Intercom bidirectionnel','Détection mouvement PIR','Vision nocturne','Installation sans fil','Application mobile incluse'],
+    specs_en:['Wide-angle HD video','Two-way intercom','PIR motion detection','Night vision','Wireless installation','Mobile app included']
   },
   {
-    id:'dashcam', slug:'dashcam', category:'auto',
-    name_fr:'Dashcam Full HD – CarGuard 1080p',
-    name_en:'Full HD Dashcam – CarGuard 1080p',
-    price:59.99, img:'/img/product-dashcam.png',
+    id:'dashcam', slug:'dashcam', type:'security', category:'auto',
+    name_fr:'Dashcam Full HD – CarGuard\u2122 1080p',
+    name_en:'Full HD Dashcam – CarGuard\u2122 1080p',
+    price:59.99, img:'img/product-dashcam.png',
     tag_fr:'AUTO', tag_en:'AUTO',
     desc_fr:'Enregistrement continu en Full HD. Votre témoin silencieux sur la route, jour et nuit.',
     desc_en:'Continuous Full HD recording. Your silent witness on the road, day and night.',
-    specs_fr:['Résolution 1080p Full HD','Enregistrement en boucle','Capteur G (impact)','Vision nocturne','Écran LCD intégré','Ventouse de fixation'],
-    specs_en:['1080p Full HD resolution','Loop recording','G-sensor (impact)','Night vision','Built-in LCD screen','Suction cup mount']
+    specs_fr:['Résolution 1080p Full HD','Enregistrement en boucle','Capteur G (impact)','Vision nocturne','Installation sans fil','Application mobile incluse'],
+    specs_en:['1080p Full HD resolution','Loop recording','G-sensor (impact)','Night vision','Wireless installation','Mobile app included']
+  },
+  // ---- CREATORS ----
+  {
+    id:'kit-4k', slug:'creator-4k-kit', type:'creator', category:'creator-camera',
+    name_fr:'Kit Caméra 4K Pro',
+    name_en:'4K Camera Kit Pro',
+    price:149.99, img:null, icon:'🎬', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
+    tag_fr:'CRÉATEUR', tag_en:'CREATOR',
+    desc_fr:'Caméra 4K compacte avec stabilisation, idéale pour YouTube et TikTok.',
+    desc_en:'Compact 4K camera with stabilization, ideal for YouTube and TikTok.',
+    specs_fr:['4K 60fps','Stabilisation intégrée','Micro intégré','Écran orientable','USB-C','Carte SD','Prêt à l\'emploi (Plug & Play)','Haute résolution'],
+    specs_en:['4K 60fps','Integrated stabilization','Built-in mic','Flip screen','USB-C','SD card','Plug & Play ready','High resolution']
+  },
+  {
+    id:'tripod-ai', slug:'creator-ai-tripod', type:'creator', category:'creator-tripod',
+    name_fr:'Trépied Suivi Facial IA',
+    name_en:'AI Face-Tracking Tripod',
+    price:89.99, img:null, icon:'🤖', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
+    tag_fr:'CRÉATEUR', tag_en:'CREATOR',
+    desc_fr:'Trépied intelligent qui suit automatiquement votre visage. Parfait pour le streaming et les tutoriels.',
+    desc_en:'Smart tripod that automatically follows your face. Perfect for streaming and tutorials.',
+    specs_fr:['Suivi facial 360°','Rotation automatique','Compatible smartphone','Télécommande Bluetooth','Pliable compact','Suivi de mouvement automatique','Prêt à l\'emploi (Plug & Play)'],
+    specs_en:['360° face tracking','Automatic rotation','Smartphone compatible','Bluetooth remote','Compact foldable','Automatic motion tracking','Plug & Play ready']
+  },
+  {
+    id:'ring-light', slug:'creator-ring-light', type:'creator', category:'creator-light',
+    name_fr:'Kit Éclairage Annulaire LED',
+    name_en:'LED Ring Light Kit',
+    price:49.99, img:null, icon:'💡', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
+    tag_fr:'CRÉATEUR', tag_en:'CREATOR',
+    desc_fr:'Éclairage professionnel portable. 3 modes, intensité réglable, support téléphone inclus.',
+    desc_en:'Portable professional lighting. 3 modes, adjustable intensity, phone holder included.',
+    specs_fr:['3 températures de couleur','Intensité réglable','Support smartphone','Trépied inclus','USB rechargeable','Prêt à l\'emploi (Plug & Play)','Haute résolution'],
+    specs_en:['3 color temperatures','Adjustable intensity','Smartphone holder','Tripod included','USB rechargeable','Plug & Play ready','High resolution']
+  },
+  {
+    id:'lav-mic', slug:'creator-lav-mic', type:'creator', category:'creator-audio',
+    name_fr:'Micro-cravate sans fil',
+    name_en:'Wireless Lavalier Mic',
+    price:59.99, img:null, icon:'🎤', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
+    tag_fr:'CRÉATEUR', tag_en:'CREATOR',
+    desc_fr:'Audio cristallin pour vos vidéos. Double micro sans fil avec récepteur universel.',
+    desc_en:'Crystal clear audio for your videos. Dual wireless mic with universal receiver.',
+    specs_fr:['Portée 50m','Double micro','Réduction de bruit','Compatible USB-C/Lightning','Autonomie 8h','Prêt à l\'emploi (Plug & Play)'],
+    specs_en:['50m range','Dual microphone','Noise reduction','USB-C/Lightning compatible','8h battery life','Plug & Play ready']
   }
 ];
+
+// ===== CROSS-SELL ITEMS (cart drawer only) =====
+const crossSellItems = [
+  { id:'sd-64gb', name_fr:'Carte Micro SD 64GB', name_en:'64GB Micro SD Card', price:14.99, icon:'💾' },
+  { id:'mini-tripod', name_fr:'Mini Trépied Flexible', name_en:'Flexible Mini Tripod', price:19.99, icon:'📐' }
+];
+const allItems = products.concat(crossSellItems);
 
 // ===== STATE =====
 let cart = JSON.parse(localStorage.getItem('viduk_cart') || '[]');
 let lang = localStorage.getItem('viduk_lang') || 'fr';
 let activeFilter = 'all';
 
+function findItem(id){ return allItems.find(x => x.id === id); }
+
 // ===== FILTER =====
 function filterProducts(cat) {
   activeFilter = cat;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
-  renderProducts();
+  const secSection = document.getElementById('security');
+  const creSection = document.getElementById('creators');
+  if (cat === 'all') { secSection.style.display=''; creSection.style.display=''; }
+  else if (cat === 'security') { secSection.style.display=''; creSection.style.display='none'; }
+  else if (cat === 'creator') { secSection.style.display='none'; creSection.style.display=''; }
+  if (cat !== 'creator') secSection.scrollIntoView({behavior:'smooth', block:'start'});
+  else creSection.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-// ===== RENDER PRODUCTS =====
-function renderProducts() {
-  const grid = document.getElementById('productsGrid');
-  const filtered = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
-  grid.innerHTML = filtered.map(p => `
+// ===== RENDER PRODUCT CARD =====
+function productCardHtml(p){
+  const imgHtml = p.img
+    ? `<img class="product-img" src="${p.img}" alt="${lang==='fr'?p.name_fr:p.name_en}" loading="lazy">`
+    : `<div class="product-img-placeholder" style="background:${p.ph_bg}">${p.icon}</div>`;
+  return `
     <div class="product-card${p.featured?' featured':''} animate" onclick="openModal('${p.id}')">
       <div class="product-img-wrap">
-        <img class="product-img" src="${p.img}" alt="${lang==='fr'?p.name_fr:p.name_en}" loading="lazy">
+        ${imgHtml}
         <div class="scan-line"></div>
         <div class="corner-accent corner-tl"></div>
         <div class="corner-accent corner-tr"></div>
@@ -701,25 +839,37 @@ function renderProducts() {
       </div>
       <div class="product-info">
         ${p.featured?'<div class="product-meta">':''}
-        <div class="product-tag">${lang==='fr'?p.tag_fr:p.tag_en}</div>
+        <div class="product-tag${p.type==='creator'?' creator':''}">${lang==='fr'?p.tag_fr:p.tag_en}</div>
         <div class="product-name">${lang==='fr'?p.name_fr:p.name_en}</div>
         <div class="product-desc">${lang==='fr'?p.desc_fr:p.desc_en}</div>
         ${p.featured?'</div>':''}
         <div class="product-bottom">
           <div class="product-price">$${p.price.toFixed(2)} <span>CAD</span></div>
-          <button class="btn-add" onclick="event.stopPropagation();addToCart('${p.id}')" data-fr="Ajouter" data-en="Add">${lang==='fr'?'Ajouter':'Add'}</button>
+          <button class="btn-add${p.type==='creator'?' creator':''}" onclick="event.stopPropagation();addToCart('${p.id}')" data-fr="Ajouter" data-en="Add">${lang==='fr'?'Ajouter':'Add'}</button>
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+}
+
+function renderProducts() {
+  const secGrid = document.getElementById('securityGrid');
+  const creGrid = document.getElementById('creatorsGrid');
+  secGrid.innerHTML = products.filter(p => p.type === 'security').map(productCardHtml).join('');
+  creGrid.innerHTML = products.filter(p => p.type === 'creator').map(productCardHtml).join('');
   setTimeout(() => document.querySelectorAll('.animate').forEach(el => observeAnim(el)), 100);
 }
 
 // ===== MODAL =====
 function openModal(id) {
-  const p = products.find(x => x.id === id);
+  const p = findItem(id);
   if (!p) return;
-  document.getElementById('modalImg').src = p.img;
+  const wrap = document.getElementById('modalImgWrap');
+  if (p.img) {
+    wrap.innerHTML = `<img class="modal-img" id="modalImg" src="${p.img}" alt="">`;
+  } else {
+    wrap.innerHTML = `<div class="modal-img-placeholder" style="background:${p.ph_bg}">${p.icon}</div>`;
+  }
   document.getElementById('modalName').textContent = lang==='fr' ? p.name_fr : p.name_en;
   document.getElementById('modalPrice').textContent = `$${p.price.toFixed(2)} CAD`;
   document.getElementById('modalDesc').textContent = lang==='fr' ? p.desc_fr : p.desc_en;
@@ -785,21 +935,24 @@ function toggleCart() {
 function renderCart() {
   const container = document.getElementById('cartItems');
   const footer = document.getElementById('cartFooter');
+  const crossSellWrap = document.getElementById('cartCrossSell');
   if (cart.length === 0) {
     container.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">&#128722;</div><p>${lang==='fr'?'Votre panier est vide':'Your cart is empty'}</p></div>`;
     footer.style.display = 'none';
+    crossSellWrap.style.display = 'none';
     return;
   }
   footer.style.display = 'block';
   let total = 0;
   container.innerHTML = cart.map(c => {
-    const p = products.find(x => x.id === c.id);
+    const p = findItem(c.id);
     if (!p) return '';
     const subtotal = p.price * c.qty;
     total += subtotal;
+    const thumb = p.img ? `<img src="${p.img}" alt="">` : `<div class="cart-item-ph" style="background:${p.ph_bg||'linear-gradient(135deg,var(--surface2),var(--surface3))'}">${p.icon||'🛒'}</div>`;
     return `
       <div class="cart-item">
-        <img src="${p.img}" alt="">
+        ${thumb}
         <div class="cart-item-info">
           <h4>${lang==='fr' ? p.name_fr : p.name_en}</h4>
           <div class="price">$${p.price.toFixed(2)}</div>
@@ -813,6 +966,26 @@ function renderCart() {
       </div>`;
   }).join('');
   document.getElementById('cartTotal').textContent = `$${total.toFixed(2)} CAD`;
+
+  // Cross-sell: only suggest items not already in cart
+  const suggestions = crossSellItems.filter(cs => !cart.find(c => c.id === cs.id));
+  if (suggestions.length > 0) {
+    crossSellWrap.style.display = 'block';
+    document.getElementById('crossSellList').innerHTML = suggestions.map(cs => `
+      <div class="cross-sell-item">
+        <div class="cs-info">
+          <div class="cs-ph">${cs.icon}</div>
+          <div>
+            <div class="cs-name">${lang==='fr'?cs.name_fr:cs.name_en}</div>
+            <div class="cs-price">$${cs.price.toFixed(2)} CAD</div>
+          </div>
+        </div>
+        <button onclick="addToCart('${cs.id}');renderCart()">${lang==='fr'?'Ajouter':'Add'}</button>
+      </div>
+    `).join('');
+  } else {
+    crossSellWrap.style.display = 'none';
+  }
 }
 
 async function checkout() {
@@ -821,8 +994,8 @@ async function checkout() {
   btn.textContent = lang === 'fr' ? 'Redirection...' : 'Redirecting...';
   try {
     const items = cart.map(c => {
-      const p = products.find(x => x.id === c.id);
-      return { name: lang==='fr' ? p.name_fr : p.name_en, price: p.price, qty: c.qty, img: window.location.origin + p.img };
+      const p = findItem(c.id);
+      return { name: lang==='fr' ? p.name_fr : p.name_en, price: p.price, qty: c.qty, img: p.img ? (window.location.origin + '/' + p.img) : undefined };
     });
     const res = await fetch('/api/checkout', {
       method: 'POST',
