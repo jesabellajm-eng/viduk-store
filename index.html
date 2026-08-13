@@ -617,6 +617,7 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
       </div>
       <div class="modal-details">
         <h2 id="modalName"></h2>
+        <div id="modalVariants" style="display:none"></div>
         <div class="price" id="modalPrice"></div>
         <div class="desc" id="modalDesc"></div>
         <ul class="modal-specs" id="modalSpecs"></ul>
@@ -784,14 +785,49 @@ const products = [
   },
   {
     id:'lav-mic', slug:'creator-lav-mic', type:'creator', category:'creator-audio',
-    name_fr:'Micro-cravate sans fil',
-    name_en:'Wireless Lavalier Mic',
+    name_fr:'Micro-cravate sans fil Pro',
+    name_en:'Wireless Lavalier Mic Pro',
     price:59.99, img:'img/product-lavalier-mic.png', icon:'🎤', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
     tag_fr:'CRÉATEUR', tag_en:'CREATOR',
     desc_fr:'Audio cristallin pour vos vidéos. Double micro sans fil avec récepteur universel.',
     desc_en:'Crystal clear audio for your videos. Dual wireless mic with universal receiver.',
     specs_fr:['Portée 50m','Double micro','Réduction de bruit','Compatible USB-C/Lightning','Autonomie 8h','Prêt à l\'emploi (Plug & Play)'],
-    specs_en:['50m range','Dual microphone','Noise reduction','USB-C/Lightning compatible','8h battery life','Plug & Play ready']
+    specs_en:['50m range','Dual microphone','Noise reduction','USB-C/Lightning compatible','8h battery life','Plug & Play ready'],
+    variant_of:'lav-mic-group'
+  },
+  {
+    id:'lav-mic-budget', slug:'creator-lav-mic-budget', type:'creator', category:'creator-audio',
+    name_fr:'Micro-cravate sans fil Essentiel',
+    name_en:'Wireless Lavalier Mic Essential',
+    price:29.99, img:'img/product-lav-mic-budget.png', icon:'🎤', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
+    tag_fr:'CRÉATEUR', tag_en:'CREATOR',
+    desc_fr:'Micro compact et abordable pour débuter en création de contenu. Compatible USB-C avec charge inversée.',
+    desc_en:'Compact and affordable mic to start content creation. USB-C compatible with reverse charging.',
+    specs_fr:['Ultra-compact','Réduction de bruit','Compatible USB-C','Charge inversée','Léger 90g','Prêt à l\'emploi (Plug & Play)'],
+    specs_en:['Ultra-compact','Noise reduction','USB-C compatible','Reverse charging','Lightweight 90g','Plug & Play ready'],
+    variant_of:'lav-mic-group'
+  },
+  {
+    id:'webcam-stream', slug:'creator-webcam-stream', type:'creator', category:'creator-camera',
+    name_fr:'Webcam Streaming HD',
+    name_en:'HD Streaming Webcam',
+    price:49.99, img:'img/product-webcam-stream.png', icon:'📷', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
+    tag_fr:'CRÉATEUR', tag_en:'CREATOR',
+    desc_fr:'Webcam HD avec ring light intégrée. Autofocus intelligent pour le streaming et les appels vidéo.',
+    desc_en:'HD webcam with built-in ring light. Smart autofocus for streaming and video calls.',
+    specs_fr:['HD 1080p / 2K','Ring light intégrée','Autofocus intelligent','Microphone intégré','Compatible PC/Mac','Prêt à l\'emploi (Plug & Play)'],
+    specs_en:['HD 1080p / 2K','Built-in ring light','Smart autofocus','Built-in microphone','PC/Mac compatible','Plug & Play ready']
+  },
+  {
+    id:'backdrop-stand', slug:'creator-backdrop-stand', type:'creator', category:'creator-studio',
+    name_fr:'Support Backdrop Studio 10ft',
+    name_en:'Studio Backdrop Stand 10ft',
+    price:79.99, img:'img/product-backdrop-stand.png', icon:'🎬', ph_bg:'linear-gradient(135deg,#0a0e1a,#1a1030)',
+    tag_fr:'CRÉATEUR', tag_en:'CREATOR',
+    desc_fr:'Support de toile de fond professionnel. Ajustable, robuste, avec sac de transport et clamps inclus.',
+    desc_en:'Professional backdrop support stand. Adjustable, heavy duty, with carrying bag and clamps included.',
+    specs_fr:['6.5 x 10 pieds','Structure ajustable','Heavy duty métal','Clamps inclus','Sac de transport','Montage rapide'],
+    specs_en:['6.5 x 10 feet','Adjustable structure','Heavy duty metal','Clamps included','Carrying bag','Quick setup']
   }
 ];
 
@@ -823,11 +859,29 @@ function filterProducts(cat) {
   else creSection.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
+// ===== VARIANT HELPERS =====
+function getVariants(p) {
+  if (!p.variant_of) return null;
+  return products.filter(v => v.variant_of === p.variant_of).sort((a,b) => a.price - b.price);
+}
+function isFirstVariant(p) {
+  if (!p.variant_of) return true;
+  const variants = getVariants(p);
+  return variants && variants[0].id === p.id;
+}
+
 // ===== RENDER PRODUCT CARD =====
 function productCardHtml(p){
   const imgHtml = p.img
     ? `<img class="product-img" src="${p.img}" alt="${lang==='fr'?p.name_fr:p.name_en}" loading="lazy">`
     : `<div class="product-img-placeholder" style="background:${p.ph_bg}">${p.icon}</div>`;
+  const variants = getVariants(p);
+  const hasVariants = variants && variants.length > 1;
+  const lowestPrice = hasVariants ? Math.min(...variants.map(v=>v.price)) : p.price;
+  const groupName_fr = hasVariants ? 'Micro-cravate sans fil' : null;
+  const groupName_en = hasVariants ? 'Wireless Lavalier Mic' : null;
+  const displayName = hasVariants ? (lang==='fr' ? groupName_fr : groupName_en) : (lang==='fr'?p.name_fr:p.name_en);
+  const priceLabel = hasVariants ? `${lang==='fr'?'À partir de ':'From '}$${lowestPrice.toFixed(2)}` : `$${p.price.toFixed(2)}`;
   return `
     <div class="product-card${p.featured?' featured':''} animate" onclick="openModal('${p.id}')">
       <div class="product-img-wrap">
@@ -841,11 +895,12 @@ function productCardHtml(p){
       <div class="product-info">
         ${p.featured?'<div class="product-meta">':''}
         <div class="product-tag${p.type==='creator'?' creator':''}">${lang==='fr'?p.tag_fr:p.tag_en}</div>
-        <div class="product-name">${lang==='fr'?p.name_fr:p.name_en}</div>
+        <div class="product-name">${displayName}</div>
         <div class="product-desc">${lang==='fr'?p.desc_fr:p.desc_en}</div>
+        ${hasVariants?`<div style="display:flex;gap:6px;margin-top:6px">${variants.map(v=>`<span style="font-size:.7rem;padding:3px 8px;border-radius:20px;border:1px solid rgba(0,168,255,.3);color:var(--cyan);cursor:pointer" onclick="event.stopPropagation();openModal('${v.id}')">${v.price<40?(lang==='fr'?'Essentiel':'Essential'):(lang==='fr'?'Pro':'Pro')}</span>`).join('')}</div>`:''}
         ${p.featured?'</div>':''}
         <div class="product-bottom">
-          <div class="product-price">$${p.price.toFixed(2)} <span>CAD</span></div>
+          <div class="product-price">${priceLabel} <span>CAD</span></div>
           <button class="btn-add${p.type==='creator'?' creator':''}" onclick="event.stopPropagation();addToCart('${p.id}')" data-fr="Ajouter" data-en="Add">${lang==='fr'?'Ajouter':'Add'}</button>
         </div>
       </div>
@@ -856,15 +911,20 @@ function productCardHtml(p){
 function renderProducts() {
   const secGrid = document.getElementById('securityGrid');
   const creGrid = document.getElementById('creatorsGrid');
-  secGrid.innerHTML = products.filter(p => p.type === 'security').map(productCardHtml).join('');
-  creGrid.innerHTML = products.filter(p => p.type === 'creator').map(productCardHtml).join('');
+  // For variants, only render the first one (lowest price) as the card
+  const secProducts = products.filter(p => p.type === 'security' && isFirstVariant(p));
+  const creProducts = products.filter(p => p.type === 'creator' && isFirstVariant(p));
+  secGrid.innerHTML = secProducts.map(productCardHtml).join('');
+  creGrid.innerHTML = creProducts.map(productCardHtml).join('');
   setTimeout(() => document.querySelectorAll('.animate').forEach(el => observeAnim(el)), 100);
 }
 
 // ===== MODAL =====
+let currentModalId = null;
 function openModal(id) {
   const p = findItem(id);
   if (!p) return;
+  currentModalId = id;
   const wrap = document.getElementById('modalImgWrap');
   if (p.img) {
     wrap.innerHTML = `<img class="modal-img" id="modalImg" src="${p.img}" alt="">`;
@@ -876,7 +936,21 @@ function openModal(id) {
   document.getElementById('modalDesc').textContent = lang==='fr' ? p.desc_fr : p.desc_en;
   const specs = lang==='fr' ? p.specs_fr : p.specs_en;
   document.getElementById('modalSpecs').innerHTML = specs.map(s => `<li>${s}</li>`).join('');
-  document.getElementById('modalAddBtn').onclick = () => { addToCart(id); closeModal(); };
+  // Variant tabs
+  const variantContainer = document.getElementById('modalVariants');
+  const variants = getVariants(p);
+  if (variants && variants.length > 1) {
+    variantContainer.innerHTML = `<div style="display:flex;gap:8px;margin-bottom:12px">${variants.map(v => {
+      const label = v.price < 40 ? (lang==='fr'?'Essentiel':'Essential') : 'Pro';
+      const active = v.id === id;
+      return `<button onclick="openModal('${v.id}')" style="padding:8px 16px;border-radius:25px;font-size:.85rem;font-weight:600;border:1px solid ${active?'var(--cyan)':'rgba(255,255,255,.15)'};background:${active?'rgba(0,168,255,.15)':'transparent'};color:${active?'var(--cyan)':'var(--silver-soft)'};cursor:pointer;transition:.2s">${label} — $${v.price.toFixed(2)}</button>`;
+    }).join('')}</div>`;
+    variantContainer.style.display = 'block';
+  } else {
+    variantContainer.innerHTML = '';
+    variantContainer.style.display = 'none';
+  }
+  document.getElementById('modalAddBtn').onclick = () => { addToCart(currentModalId); closeModal(); };
   document.getElementById('modalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
