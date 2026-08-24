@@ -158,6 +158,30 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
 .modal-btn{width:100%;padding:16px;border-radius:12px;font-size:1.05rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;transition:all .3s;letter-spacing:.5px}
 .modal-btn:hover{box-shadow:0 8px 30px rgba(0,168,255,.3);transform:translateY(-2px)}
 
+/* ===== ENHANCED MODAL (product page style) ===== */
+.modal{max-width:1100px}
+.modal-img-wrap{min-height:100%}
+.modal-img{width:100%;height:100%;min-height:320px;max-height:520px;object-fit:cover}
+.modal-tag{display:inline-block;font-family:'Orbitron',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);background:rgba(0,168,255,.08);border:1px solid rgba(0,168,255,.15);padding:4px 12px;border-radius:4px;margin-bottom:10px}
+.modal-detail{color:var(--silver);font-size:.92rem;line-height:1.75;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(0,168,255,.06)}
+.modal-features{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.modal-feature-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.18);color:var(--cyan);font-size:.78rem;font-weight:600;padding:7px 14px;border-radius:50px;letter-spacing:.2px;white-space:nowrap}
+.modal-accordion{margin-bottom:24px;border-top:1px solid rgba(0,168,255,.08)}
+.modal-accordion-item{border-bottom:1px solid rgba(0,168,255,.08)}
+.modal-accordion-header{display:flex;align-items:center;justify-content:space-between;padding:14px 4px;cursor:pointer;font-size:.9rem;font-weight:700;color:var(--white);transition:color .2s;user-select:none}
+.modal-accordion-header:hover{color:var(--cyan)}
+.modal-accordion-header .acc-arrow{transition:transform .3s;font-size:.85rem;color:var(--silver-soft);width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,168,255,.06);flex-shrink:0}
+.modal-accordion-item.open .modal-accordion-header .acc-arrow{transform:rotate(45deg);background:rgba(0,168,255,.15);color:var(--cyan)}
+.modal-accordion-content{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s}
+.modal-accordion-item.open .modal-accordion-content{max-height:400px;padding-bottom:16px}
+.modal-accordion-content ul{list-style:none;padding:0 4px}
+.modal-accordion-content ul li{color:var(--silver);font-size:.85rem;padding:6px 0;display:flex;align-items:center;gap:10px}
+.modal-accordion-content ul li::before{content:'';display:inline-block;width:5px;height:5px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px rgba(0,229,255,.4);flex-shrink:0}
+.modal-accordion-content p{color:var(--silver);font-size:.85rem;line-height:1.65;padding:0 4px}
+@media(max-width:768px){
+  .modal-img{max-height:280px}
+}
+
 /* ===== DIVIDER ===== */
 .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,168,255,.15),rgba(0,229,255,.25),rgba(0,168,255,.15),transparent);margin:20px 0}
 
@@ -616,11 +640,14 @@ background-size:60px 60px;pointer-events:none;z-index:0;opacity:.5}
         <img class="modal-img" id="modalImg" src="" alt="">
       </div>
       <div class="modal-details">
+        <span class="modal-tag" id="modalTag"></span>
         <h2 id="modalName"></h2>
         <div id="modalVariants" style="display:none"></div>
         <div class="price" id="modalPrice"></div>
-        <div class="desc" id="modalDesc"></div>
-        <ul class="modal-specs" id="modalSpecs"></ul>
+        <div class="desc" id="modalDesc" style="display:none"></div>
+        <div class="modal-detail" id="modalDetail"></div>
+        <div class="modal-features" id="modalFeatures"></div>
+        <div class="modal-accordion" id="modalAccordion"></div>
         <button class="modal-btn" id="modalAddBtn" data-fr="Ajouter au panier" data-en="Add to Cart">Ajouter au panier</button>
       </div>
     </div>
@@ -670,7 +697,15 @@ const products = [
     desc_fr:'Soyez alerté instantanément quand une porte ou fenêtre s\'ouvre. Compatible Tuya Smart, installation sans fil en 2 minutes.',
     desc_en:'Get instant alerts when a door or window opens. Tuya Smart compatible, wireless installation in 2 minutes.',
     specs_fr:['Connexion WiFi 2.4GHz','Alertes push en temps réel','Compatible Tuya Smart / Smart Life','Pile longue durée incluse','Installation sans fil','Vision nocturne','Application mobile incluse'],
-    specs_en:['2.4GHz WiFi connection','Real-time push alerts','Tuya Smart / Smart Life compatible','Long-lasting battery included','Wireless installation','Night vision','Mobile app included']
+    specs_en:['2.4GHz WiFi connection','Real-time push alerts','Tuya Smart / Smart Life compatible','Long-lasting battery included','Wireless installation','Night vision','Mobile app included'],
+    detail_fr:"Protégez vos portes et fenêtres avec des alertes push instantanées dès qu'un mouvement est détecté. Installation en 2 minutes sans outil, sans perçage — collez et c'est prêt. Sa pile longue durée assure des mois d'autonomie sans entretien. Compatible avec l'application Tuya / Smart Life pour créer des automatisations avec vos autres appareils intelligents.",
+    detail_en:"Protect your doors and windows with instant push alerts the moment movement is detected. 2-minute tool-free installation — just stick it on and you're ready. Long-lasting battery ensures months of worry-free use. Works with the Tuya / Smart Life app so you can automate it with your other smart devices.",
+    features_fr:["📶 WiFi 2.4GHz", "🔔 Alertes en temps réel", "🔗 Compatible Tuya", "🔋 Longue autonomie", "🛠️ Installation sans fil"],
+    features_en:["📶 WiFi 2.4GHz", "🔔 Real-time alerts", "🔗 Tuya compatible", "🔋 Long battery life", "🛠️ Wireless install"],
+    includes_fr:["1x Capteur", "1x Aimant", "1x Kit adhésif", "1x Manuel d'utilisation"],
+    includes_en:["1x Sensor", "1x Magnet", "1x Adhesive kit", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'indoor-1080', slug:'camera-indoor', type:'security', category:'camera-indoor',
@@ -681,7 +716,15 @@ const products = [
     desc_fr:'Vision Full HD jour et nuit. Détection de mouvement intelligente avec notifications instantanées sur votre téléphone.',
     desc_en:'Full HD day and night vision. Smart motion detection with instant notifications on your phone.',
     specs_fr:['Résolution 1080p Full HD','Vision nocturne infrarouge','Détection de mouvement IA','Audio bidirectionnel','Installation sans fil','Application mobile incluse'],
-    specs_en:['1080p Full HD resolution','Infrared night vision','AI motion detection','Two-way audio','Wireless installation','Mobile app included']
+    specs_en:['1080p Full HD resolution','Infrared night vision','AI motion detection','Two-way audio','Wireless installation','Mobile app included'],
+    detail_fr:"Profitez d'une couverture à 360° en Full HD 1080p pour surveiller chaque recoin de votre intérieur. La détection de mouvement par intelligence artificielle filtre les fausses alertes pour ne vous prévenir que de ce qui compte vraiment. L'audio bidirectionnel vous permet d'écouter et de parler à distance. Ajoutez une carte SD jusqu'à 128 Go pour un stockage local sans abonnement.",
+    detail_en:"Enjoy full 360° coverage in 1080p Full HD to monitor every corner of your home. AI-powered motion detection filters out false alarms so you're only notified about what matters. Two-way audio lets you listen in and speak remotely. Add a microSD card up to 128GB for local storage with no subscription needed.",
+    features_fr:["📹 1080p HD", "🔄 Rotation 360°", "🤖 Détection IA", "🎙️ Audio bidirectionnel", "🌙 Vision nocturne 10m", "💾 Carte SD jusqu'à 128Go"],
+    features_en:["📹 1080p HD", "🔄 360° rotation", "🤖 AI motion detect", "🎙️ Two-way audio", "🌙 Night vision 10m", "💾 SD card up to 128GB"],
+    includes_fr:["1x Caméra", "1x Câble USB", "1x Kit de fixation", "1x Manuel d'utilisation"],
+    includes_en:["1x Camera", "1x USB cable", "1x Mount kit", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'outdoor-ip66', slug:'camera-outdoor', type:'security', category:'camera-outdoor',
@@ -692,7 +735,15 @@ const products = [
     desc_fr:'Résistante aux intempéries, conçue pour l\'extérieur. Surveillance robuste pluie, neige ou canicule.',
     desc_en:'Weather-resistant, built for outdoors. Robust surveillance in rain, snow or heat.',
     specs_fr:['Certification étanche IP66','Vision nocturne 30m','Détection de mouvement','Installation sans fil','Application mobile incluse','Compatible Tuya Smart'],
-    specs_en:['IP66 waterproof certification','30m night vision','Motion detection','Wireless installation','Mobile app included','Tuya Smart compatible']
+    specs_en:['IP66 waterproof certification','30m night vision','Motion detection','Wireless installation','Mobile app included','Tuya Smart compatible'],
+    detail_fr:"Conçue pour résister au climat canadien — pluie, neige, de -20°C à 50°C. Sa certification étanche IP66 garantit une durabilité maximale peu importe la saison. La vision nocturne jusqu'à 30 mètres capture chaque détail même dans l'obscurité totale. Les alertes de mouvement intelligentes vous préviennent instantanément en cas d'activité suspecte.",
+    detail_en:"Built to withstand Canadian weather — rain, snow, from -20°C to 50°C. Its IP66 waterproof rating guarantees maximum durability all year round. Night vision up to 30 meters captures every detail even in total darkness. Smart motion alerts notify you instantly of any suspicious activity.",
+    features_fr:["💧 Étanche IP66", "🌡️ -20°C à 50°C", "🌙 Vision nocturne 30m", "🔔 Alertes intelligentes", "🏠 Boîtier résistant aux intempéries"],
+    features_en:["💧 IP66 waterproof", "🌡️ -20°C to 50°C", "🌙 30m night vision", "🔔 Smart alerts", "🏠 Weatherproof housing"],
+    includes_fr:["1x Caméra", "1x Adaptateur secteur", "1x Kit de fixation", "1x Sachet de vis", "1x Manuel d'utilisation"],
+    includes_en:["1x Camera", "1x Power adapter", "1x Mount kit", "1x Screws", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'solar-cam', slug:'camera-solar', type:'security', category:'camera-solar', featured:true,
@@ -703,7 +754,15 @@ const products = [
     desc_fr:'Zéro câble, zéro facture d\'électricité. Fonctionne à l\'énergie solaire pour une surveillance 100% autonome.',
     desc_en:'Zero cables, zero electricity bill. Solar-powered for 100% autonomous surveillance.',
     specs_fr:['Panneau solaire intégré','Batterie rechargeable 6000mAh','1080p Full HD','Installation sans fil','Vision nocturne','Application mobile incluse'],
-    specs_en:['Built-in solar panel','6000mAh rechargeable battery','1080p Full HD','Wireless installation','Night vision','Mobile app included']
+    specs_en:['Built-in solar panel','6000mAh rechargeable battery','1080p Full HD','Wireless installation','Night vision','Mobile app included'],
+    detail_fr:"100% autonome grâce à son panneau solaire intégré qui recharge une batterie de 6000mAh — aucun câblage, aucun coût d'électricité. Idéale pour les endroits éloignés comme les chalets, garages ou entrées de terrain. Profitez d'une image Full HD 1080p avec vision nocturne pour une surveillance continue, jour et nuit, où que vous soyez.",
+    detail_en:"100% autonomous thanks to its built-in solar panel that recharges a 6000mAh battery — no wiring, no electricity cost. Perfect for remote locations like cottages, garages or driveways. Enjoy Full HD 1080p footage with night vision for continuous day-and-night monitoring wherever you are.",
+    features_fr:["☀️ Alimentation solaire", "🔋 Batterie 6000mAh", "📹 1080p HD", "🔌 Aucun câblage requis", "🏕️ Idéal endroits éloignés"],
+    features_en:["☀️ Solar powered", "🔋 6000mAh battery", "📹 1080p HD", "🔌 No wiring needed", "🏕️ Works in remote locations"],
+    includes_fr:["1x Caméra solaire", "1x Support de fixation", "1x Kit de vis", "1x Manuel d'utilisation"],
+    includes_en:["1x Solar camera", "1x Mounting bracket", "1x Screws kit", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'micro-cam', slug:'camera-mini-spy', type:'security', category:'camera-spy',
@@ -714,7 +773,15 @@ const products = [
     desc_fr:'Ultra-compacte et discrète. Surveillez sans être vu. Parfaite pour la maison, le bureau ou la voiture.',
     desc_en:'Ultra-compact and discreet. Monitor without being seen. Perfect for home, office or car.',
     specs_fr:['Taille ultra-compacte','Résolution HD 1080p','Vision nocturne','Détection de mouvement','Installation sans fil','Application mobile incluse'],
-    specs_en:['Ultra-compact size','1080p HD resolution','Night vision','Motion detection','Wireless installation','Mobile app included']
+    specs_en:['Ultra-compact size','1080p HD resolution','Night vision','Motion detection','Wireless installation','Mobile app included'],
+    detail_fr:"Caméra corporelle ultra-compacte qui se glisse discrètement partout. Filme en Full HD 1080p avec vision nocturne pour une surveillance efficace même dans le noir. L'enregistrement s'active automatiquement sur détection de mouvement pour économiser l'espace de stockage. Compatible avec une carte micro SD jusqu'à 128 Go, et son support magnétique facilite le positionnement.",
+    detail_en:"Ultra-compact body camera that fits discreetly anywhere. Records in Full HD 1080p with night vision for effective monitoring even in the dark. Recording activates automatically on motion detection to save storage space. Supports up to 128GB micro SD cards, with a magnetic mount for easy placement.",
+    features_fr:["🤏 Ultra-compacte", "📹 1080p HD", "🧲 Support magnétique", "🎯 Activation sur mouvement", "💾 Support carte SD 128Go"],
+    features_en:["🤏 Ultra-compact", "📹 1080p HD", "🧲 Magnetic mount", "🎯 Motion-activated", "💾 128GB SD support"],
+    includes_fr:["1x Mini caméra", "1x Câble USB", "1x Support magnétique", "1x Clip", "1x Manuel d'utilisation"],
+    includes_en:["1x Mini camera", "1x USB cable", "1x Magnetic mount", "1x Clip", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'pano-360', slug:'camera-360', type:'security', category:'camera-360',
@@ -725,7 +792,15 @@ const products = [
     desc_fr:'Vue à 360° sans angle mort. Couvrez une pièce entière avec une seule caméra.',
     desc_en:'360° view with no blind spots. Cover an entire room with a single camera.',
     specs_fr:['Vue panoramique 360°','Résolution 1080p','Suivi automatique de mouvement','Audio bidirectionnel','Vision nocturne','Application mobile incluse'],
-    specs_en:['360° panoramic view','1080p resolution','Auto motion tracking','Two-way audio','Night vision','Mobile app included']
+    specs_en:['360° panoramic view','1080p resolution','Auto motion tracking','Two-way audio','Night vision','Mobile app included'],
+    detail_fr:"Couvre une pièce entière grâce à sa rotation panoramique et son inclinaison à 360°. Le suivi automatique repère et suit les mouvements en temps réel. L'audio bidirectionnel permet une communication instantanée avec les personnes présentes. Sa vision nocturne assure une couverture 24/7, et elle est compatible avec l'application Tuya Smart.",
+    detail_en:"Covers an entire room with 360° pan and tilt rotation. Auto-tracking detects and follows movement in real time. Two-way audio allows instant communication with people on site. Night vision ensures 24/7 coverage, and it's compatible with the Tuya Smart app.",
+    features_fr:["🔄 Pan/tilt 360°", "🎯 Suivi automatique", "🎙️ Audio bidirectionnel", "🌙 Vision nocturne", "🔗 Tuya Smart"],
+    features_en:["🔄 360° pan/tilt", "🎯 Auto-tracking", "🎙️ Two-way audio", "🌙 Night vision", "🔗 Tuya Smart"],
+    includes_fr:["1x Caméra", "1x Câble USB", "1x Kit de fixation", "1x Manuel d'utilisation"],
+    includes_en:["1x Camera", "1x USB cable", "1x Mount kit", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'doorbell', slug:'doorbell', type:'security', category:'doorbell', featured:true,
@@ -736,7 +811,15 @@ const products = [
     desc_fr:'Voyez et parlez à vos visiteurs depuis votre téléphone, même quand vous n\'êtes pas chez vous.',
     desc_en:'See and talk to visitors from your phone, even when you\'re not home.',
     specs_fr:['Vidéo HD grand angle','Intercom bidirectionnel','Détection mouvement PIR','Vision nocturne','Installation sans fil','Application mobile incluse'],
-    specs_en:['Wide-angle HD video','Two-way intercom','PIR motion detection','Night vision','Wireless installation','Mobile app included']
+    specs_en:['Wide-angle HD video','Two-way intercom','PIR motion detection','Night vision','Wireless installation','Mobile app included'],
+    detail_fr:"Voyez qui est à votre porte de n'importe où grâce à une vidéo HD grand angle avec vision nocturne. L'intercom bidirectionnel vous permet de parler aux visiteurs, livreurs et plus encore. La détection de mouvement PIR envoie des alertes instantanées dès qu'une présence est détectée. Son installation sans fil se fait en quelques minutes, sans câblage complexe.",
+    detail_en:"See who's at your door from anywhere thanks to wide-angle HD video with night vision. Two-way intercom lets you talk to visitors, delivery drivers and more. PIR motion detection sends instant alerts the moment presence is detected. Wireless installation takes just minutes, no complex wiring needed.",
+    features_fr:["📐 HD grand angle", "🎙️ Intercom bidirectionnel", "🎯 Détection PIR", "🌙 Vision nocturne", "🛠️ Installation sans fil"],
+    features_en:["📐 Wide-angle HD", "🎙️ Two-way intercom", "🎯 PIR motion", "🌙 Night vision", "🛠️ Wireless install"],
+    includes_fr:["1x Caméra de sonnette", "1x Carillon", "1x Support de fixation", "1x Sachet de vis", "1x Manuel d'utilisation"],
+    includes_en:["1x Doorbell camera", "1x Chime", "1x Mounting bracket", "1x Screws", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'dashcam', slug:'dashcam', type:'security', category:'auto',
@@ -747,7 +830,15 @@ const products = [
     desc_fr:'Enregistrement continu en Full HD. Votre témoin silencieux sur la route, jour et nuit.',
     desc_en:'Continuous Full HD recording. Your silent witness on the road, day and night.',
     specs_fr:['Résolution 1080p Full HD','Enregistrement en boucle','Capteur G (impact)','Vision nocturne','Installation sans fil','Application mobile incluse'],
-    specs_en:['1080p Full HD resolution','Loop recording','G-sensor (impact)','Night vision','Wireless installation','Mobile app included']
+    specs_en:['1080p Full HD resolution','Loop recording','G-sensor (impact)','Night vision','Wireless installation','Mobile app included'],
+    detail_fr:"Votre témoin silencieux à chaque trajet. L'enregistrement en boucle continue en Full HD capture tout sans interruption. Le capteur G détecte les impacts et sauvegarde automatiquement les séquences importantes. La vision nocturne garantit des images claires même de nuit, et le montage à ventouse rend l'installation ultra rapide.",
+    detail_en:"Your silent witness on every drive. Continuous loop recording in Full HD captures everything without interruption. The G-sensor detects impacts and automatically saves important footage. Night vision ensures clear footage even at night, and the suction cup mount makes installation quick and easy.",
+    features_fr:["📹 1080p Full HD", "🔁 Enregistrement en boucle", "💥 Capteur G (impact)", "🌙 Vision nocturne", "🛠️ Montage facile"],
+    features_en:["📹 1080p Full HD", "🔁 Loop recording", "💥 G-sensor impact detect", "🌙 Night vision", "🛠️ Easy mount"],
+    includes_fr:["1x Dashcam", "1x Chargeur voiture", "1x Support ventouse", "1x Câble USB", "1x Manuel d'utilisation"],
+    includes_en:["1x Dashcam", "1x Car charger", "1x Suction mount", "1x USB cable", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   // ---- CREATORS ----
   {
@@ -759,7 +850,15 @@ const products = [
     desc_fr:'Caméra 4K compacte avec stabilisation, idéale pour YouTube et TikTok.',
     desc_en:'Compact 4K camera with stabilization, ideal for YouTube and TikTok.',
     specs_fr:['4K 60fps','Stabilisation intégrée','Micro intégré','Écran orientable','USB-C','Carte SD','Prêt à l\'emploi (Plug & Play)','Haute résolution'],
-    specs_en:['4K 60fps','Integrated stabilization','Built-in mic','Flip screen','USB-C','SD card','Plug & Play ready','High resolution']
+    specs_en:['4K 60fps','Integrated stabilization','Built-in mic','Flip screen','USB-C','SD card','Plug & Play ready','High resolution'],
+    detail_fr:"Enregistrement professionnel en 4K à 60 images/seconde avec stabilisation intégrée pour des vidéos toujours nettes. L'écran orientable est parfait pour le vlogging et les selfies vidéo. Connectivité USB-C rapide, format compact et portable — idéal pour YouTube, TikTok et le streaming. Emplacement pour carte SD jusqu'à 256 Go pour ne jamais manquer de stockage.",
+    detail_en:"Professional 4K recording at 60fps with built-in stabilization for consistently sharp video. The flip screen is perfect for vlogging and video selfies. Fast USB-C connectivity in a compact, portable form factor — ideal for YouTube, TikTok and streaming. SD card slot up to 256GB so you never run out of storage.",
+    features_fr:["🎬 4K 60fps", "🩻 Stabilisation intégrée", "🔄 Écran orientable", "🔌 USB-C", "💾 SD jusqu'à 256Go"],
+    features_en:["🎬 4K 60fps", "🩻 Built-in stabilization", "🔄 Flip screen", "🔌 USB-C", "💾 SD up to 256GB"],
+    includes_fr:["1x Caméra 4K", "1x Câble USB-C", "1x Pochette de transport", "1x Manuel d'utilisation"],
+    includes_en:["1x 4K camera", "1x USB-C cable", "1x Carrying pouch", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'tripod-ai', slug:'creator-ai-tripod', type:'creator', category:'creator-tripod',
@@ -770,7 +869,15 @@ const products = [
     desc_fr:'Trépied intelligent qui suit automatiquement votre visage. Parfait pour le streaming et les tutoriels.',
     desc_en:'Smart tripod that automatically follows your face. Perfect for streaming and tutorials.',
     specs_fr:['Suivi facial 360°','Rotation automatique','Compatible smartphone','Télécommande Bluetooth','Pliable compact','Suivi de mouvement automatique','Prêt à l\'emploi (Plug & Play)'],
-    specs_en:['360° face tracking','Automatic rotation','Smartphone compatible','Bluetooth remote','Compact foldable','Automatic motion tracking','Plug & Play ready']
+    specs_en:['360° face tracking','Automatic rotation','Smartphone compatible','Bluetooth remote','Compact foldable','Automatic motion tracking','Plug & Play ready'],
+    detail_fr:"Le suivi facial par intelligence artificielle vous suit automatiquement dans vos déplacements — plus besoin de caméraman. La rotation automatique à 360° garde le sujet toujours cadré. La télécommande Bluetooth permet de démarrer/arrêter à distance. Compatible avec tous les smartphones, il est parfait pour le streaming, les tutoriels et les appels vidéo.",
+    detail_en:"AI-powered face tracking follows you automatically as you move — no cameraman needed. 360° auto-rotation keeps your subject perfectly framed at all times. The Bluetooth remote lets you start/stop from a distance. Compatible with all smartphones, it's perfect for streaming, tutorials and video calls.",
+    features_fr:["🔄 Suivi facial IA 360°", "📡 Télécommande Bluetooth", "📱 Tous smartphones", "🧳 Compact et pliable", "🎥 Aucun caméraman requis"],
+    features_en:["🔄 360° AI face tracking", "📡 Bluetooth remote", "📱 All smartphones", "🧳 Compact foldable", "🎥 No cameraman needed"],
+    includes_fr:["1x Trépied IA", "1x Télécommande Bluetooth", "1x Câble USB-C", "1x Manuel d'utilisation"],
+    includes_en:["1x AI tripod", "1x Bluetooth remote", "1x USB-C cable", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'ring-light', slug:'creator-ring-light', type:'creator', category:'creator-light',
@@ -781,7 +888,15 @@ const products = [
     desc_fr:'Éclairage professionnel portable. 3 modes, intensité réglable, support téléphone inclus.',
     desc_en:'Portable professional lighting. 3 modes, adjustable intensity, phone holder included.',
     specs_fr:['3 températures de couleur','Intensité réglable','Support smartphone','Trépied inclus','USB rechargeable','Prêt à l\'emploi (Plug & Play)','Haute résolution'],
-    specs_en:['3 color temperatures','Adjustable intensity','Smartphone holder','Tripod included','USB rechargeable','Plug & Play ready','High resolution']
+    specs_en:['3 color temperatures','Adjustable intensity','Smartphone holder','Tripod included','USB rechargeable','Plug & Play ready','High resolution'],
+    detail_fr:"Éclairage annulaire professionnel offrant 3 températures de couleur (chaud/neutre/froid) et 10 niveaux de luminosité. Comprend un trépied ajustable et un support téléphone. Alimenté par USB — fonctionne avec n'importe quelle banque d'alimentation ou ordinateur portable. Son diamètre de 10 pouces offre un éclairage parfait du visage.",
+    detail_en:"Professional ring light with 3 color temperatures (warm/neutral/cool) and 10 brightness levels. Includes an adjustable tripod stand and phone holder. USB powered — works with any power bank or laptop. Its 10-inch diameter delivers perfect face lighting.",
+    features_fr:["🌡️ 3 températures de couleur", "💡 10 niveaux de luminosité", "📱 Support téléphone inclus", "🔌 Alimentation USB", "📏 Diamètre 10 pouces"],
+    features_en:["🌡️ 3 color temps", "💡 10 brightness levels", "📱 Phone holder included", "🔌 USB powered", "📏 10\" diameter"],
+    includes_fr:["1x Anneau lumineux LED", "1x Trépied", "1x Support téléphone", "1x Câble USB", "1x Manuel d'utilisation"],
+    includes_en:["1x LED ring light", "1x Tripod stand", "1x Phone holder", "1x USB cable", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'lav-mic', slug:'creator-lav-mic', type:'creator', category:'creator-audio',
@@ -793,7 +908,15 @@ const products = [
     desc_en:'Crystal clear audio for your videos. Dual wireless mic with universal receiver.',
     specs_fr:['Portée 50m','Double micro','Réduction de bruit','Compatible USB-C/Lightning','Autonomie 8h','Prêt à l\'emploi (Plug & Play)'],
     specs_en:['50m range','Dual microphone','Noise reduction','USB-C/Lightning compatible','8h battery life','Plug & Play ready'],
-    variant_of:'lav-mic-group'
+    variant_of:'lav-mic-group',
+    detail_fr:"Audio sans fil de qualité broadcast avec une portée de 50 mètres. Système à double microphone idéal pour les entrevues ou le contenu à deux personnes. Réduction de bruit active pour un son toujours clair. Compatible USB-C et Lightning. Autonomie de 8 heures par charge.",
+    detail_en:"Broadcast-quality wireless audio with a 50m range. Dual microphone system ideal for interviews or dual-person content. Active noise reduction for consistently clear sound. Compatible with USB-C and Lightning. 8-hour battery life per charge.",
+    features_fr:["📡 Portée 50m sans fil", "🎙️ Système double micro", "🔇 Réduction de bruit", "🔌 USB-C + Lightning", "🔋 Autonomie 8h"],
+    features_en:["📡 50m wireless range", "🎙️ Dual mic system", "🔇 Noise reduction", "🔌 USB-C + Lightning", "🔋 8h battery"],
+    includes_fr:["2x Microphones sans fil", "1x Récepteur", "1x Adaptateur USB-C", "1x Adaptateur Lightning", "1x Étui de recharge", "1x Manuel d'utilisation"],
+    includes_en:["2x Wireless microphones", "1x Receiver", "1x USB-C adapter", "1x Lightning adapter", "1x Charging case", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'lav-mic-budget', slug:'creator-lav-mic-budget', type:'creator', category:'creator-audio',
@@ -805,7 +928,15 @@ const products = [
     desc_en:'Compact and affordable mic to start content creation. USB-C compatible with reverse charging.',
     specs_fr:['Ultra-compact','Réduction de bruit','Compatible USB-C','Charge inversée','Léger 90g','Prêt à l\'emploi (Plug & Play)'],
     specs_en:['Ultra-compact','Noise reduction','USB-C compatible','Reverse charging','Lightweight 90g','Plug & Play ready'],
-    variant_of:'lav-mic-group'
+    variant_of:'lav-mic-group',
+    detail_fr:"Micro sans fil compact et abordable, parfait pour débuter. Connexion USB-C plug-and-play sans configuration. Réduction de bruit intégrée pour un son propre. Fonction de charge inversée pratique. Seulement 90g — vous oublierez même que vous le portez.",
+    detail_en:"Compact and affordable entry-level wireless mic. Plug-and-play USB-C connection with zero setup. Built-in noise reduction for clean audio. Handy reverse charging feature. Only 90g — you'll forget you're wearing it.",
+    features_fr:["🪶 Ultra-léger 90g", "🔌 USB-C plug & play", "🔇 Réduction de bruit", "🔋 Charge inversée", "🧳 Compact"],
+    features_en:["🪶 Ultra-light 90g", "🔌 USB-C plug & play", "🔇 Noise reduction", "🔋 Reverse charging", "🧳 Compact"],
+    includes_fr:["1x Microphone sans fil", "1x Récepteur USB-C", "1x Câble de charge", "1x Manuel d'utilisation"],
+    includes_en:["1x Wireless microphone", "1x USB-C receiver", "1x Charging cable", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'webcam-stream', slug:'creator-webcam-stream', type:'creator', category:'creator-camera',
@@ -816,7 +947,15 @@ const products = [
     desc_fr:'Webcam HD avec ring light intégrée. Autofocus intelligent pour le streaming et les appels vidéo.',
     desc_en:'HD webcam with built-in ring light. Smart autofocus for streaming and video calls.',
     specs_fr:['HD 1080p / 2K','Ring light intégrée','Autofocus intelligent','Microphone intégré','Compatible PC/Mac','Prêt à l\'emploi (Plug & Play)'],
-    specs_en:['HD 1080p / 2K','Built-in ring light','Smart autofocus','Built-in microphone','PC/Mac compatible','Plug & Play ready']
+    specs_en:['HD 1080p / 2K','Built-in ring light','Smart autofocus','Built-in microphone','PC/Mac compatible','Plug & Play ready'],
+    detail_fr:"Diffusez en 1080p/2K net avec un anneau lumineux intégré pour un éclairage parfait en toutes circonstances. L'autofocus intelligent vous garde toujours net à l'image. Microphone intégré à réduction de bruit pour un son clair. Le clip universel s'adapte à tout moniteur ou ordinateur portable. Plug & play — aucun pilote requis.",
+    detail_en:"Stream in crisp 1080p/2K with a built-in ring light for perfect lighting in any condition. Smart autofocus keeps you sharp at all times. Built-in noise-cancelling mic for clear sound. Universal clip fits any monitor or laptop. Plug & play — no drivers needed.",
+    features_fr:["📹 1080p/2K", "💡 Ring light intégré", "🎯 Autofocus", "🎙️ Micro anti-bruit", "🔌 Plug & Play"],
+    features_en:["📹 1080p/2K", "💡 Built-in ring light", "🎯 Autofocus", "🎙️ Noise-cancelling mic", "🔌 Plug & play"],
+    includes_fr:["1x Webcam", "1x Câble USB", "1x Clip pour moniteur", "1x Manuel d'utilisation"],
+    includes_en:["1x Webcam", "1x USB cable", "1x Monitor clip", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   },
   {
     id:'backdrop-stand', slug:'creator-backdrop-stand', type:'creator', category:'creator-studio',
@@ -827,7 +966,15 @@ const products = [
     desc_fr:'Support de toile de fond professionnel. Ajustable, robuste, avec sac de transport et clamps inclus.',
     desc_en:'Professional backdrop support stand. Adjustable, heavy duty, with carrying bag and clamps included.',
     specs_fr:['6.5 x 10 pieds','Structure ajustable','Heavy duty métal','Clamps inclus','Sac de transport','Montage rapide'],
-    specs_en:['6.5 x 10 feet','Adjustable structure','Heavy duty metal','Clamps included','Carrying bag','Quick setup']
+    specs_en:['6.5 x 10 feet','Adjustable structure','Heavy duty metal','Clamps included','Carrying bag','Quick setup'],
+    detail_fr:"Système de support de toile de fond professionnel de 6.5 x 10 pieds. Construction robuste en métal avec hauteur et largeur ajustables. Installation rapide en quelques minutes. Comprend un sac de transport pour la portabilité et des clamps pour fixer solidement le tissu.",
+    detail_en:"Professional 6.5 x 10ft backdrop support system. Heavy-duty metal construction with adjustable height and width. Quick setup in minutes. Includes a carrying bag for portability and clamps to securely hold the fabric.",
+    features_fr:["📏 6.5 x 10 pieds", "🔩 Métal robuste", "⚙️ Ajustable", "⏱️ Installation rapide", "🧳 Sac de transport inclus"],
+    features_en:["📏 6.5 x 10ft", "🔩 Heavy-duty metal", "⚙️ Adjustable", "⏱️ Quick setup", "🧳 Carrying bag included"],
+    includes_fr:["1x Structure de support", "4x Clamps", "1x Sac de transport", "1x Manuel d'utilisation"],
+    includes_en:["1x Backdrop stand frame", "4x Clamps", "1x Carrying bag", "1x User manual"],
+    shipping_fr:"Expédié depuis notre entrepôt partenaire — Livraison au Canada en 7 à 15 jours ouvrables",
+    shipping_en:"Shipped from our partner warehouse — Delivery in Canada in 7 to 15 business days"
   }
 ];
 
@@ -921,6 +1068,15 @@ function renderProducts() {
 
 // ===== MODAL =====
 let currentModalId = null;
+
+function toggleAccordion(idx) {
+  const items = document.querySelectorAll('#modalAccordion .modal-accordion-item');
+  items.forEach((el, i) => {
+    if (i === idx) el.classList.toggle('open');
+    else el.classList.remove('open');
+  });
+}
+
 function openModal(id) {
   const p = findItem(id);
   if (!p) return;
@@ -931,11 +1087,61 @@ function openModal(id) {
   } else {
     wrap.innerHTML = `<div class="modal-img-placeholder" style="background:${p.ph_bg}">${p.icon}</div>`;
   }
+  document.getElementById('modalTag').textContent = lang==='fr' ? (p.tag_fr||'') : (p.tag_en||'');
+  document.getElementById('modalTag').style.display = (p.tag_fr||p.tag_en) ? 'inline-block' : 'none';
   document.getElementById('modalName').textContent = lang==='fr' ? p.name_fr : p.name_en;
   document.getElementById('modalPrice').textContent = `$${p.price.toFixed(2)} CAD`;
-  document.getElementById('modalDesc').textContent = lang==='fr' ? p.desc_fr : p.desc_en;
+
+  // Longer detail description (falls back to short desc if not present)
+  const detailEl = document.getElementById('modalDetail');
+  const detail = lang==='fr' ? (p.detail_fr || p.desc_fr) : (p.detail_en || p.desc_en);
+  detailEl.textContent = detail || '';
+
+  // Feature badges
+  const featuresEl = document.getElementById('modalFeatures');
+  const features = lang==='fr' ? p.features_fr : p.features_en;
+  if (features && features.length) {
+    featuresEl.innerHTML = features.map(f => `<span class="modal-feature-badge">${f}</span>`).join('');
+    featuresEl.style.display = 'flex';
+  } else {
+    featuresEl.innerHTML = '';
+    featuresEl.style.display = 'none';
+  }
+
+  // Accordion: Includes / Shipping / Specifications
+  const includes = lang==='fr' ? p.includes_fr : p.includes_en;
+  const shipping = lang==='fr' ? p.shipping_fr : p.shipping_en;
   const specs = lang==='fr' ? p.specs_fr : p.specs_en;
-  document.getElementById('modalSpecs').innerHTML = specs.map(s => `<li>${s}</li>`).join('');
+  const sections = [];
+  if (includes && includes.length) {
+    sections.push({
+      title: lang==='fr' ? '📦 Contenu de la boîte' : '📦 What\'s Included',
+      html: `<ul>${includes.map(s => `<li>${s}</li>`).join('')}</ul>`
+    });
+  }
+  if (shipping) {
+    sections.push({
+      title: lang==='fr' ? '🚚 Livraison' : '🚚 Shipping',
+      html: `<p>${shipping}</p>`
+    });
+  }
+  if (specs && specs.length) {
+    sections.push({
+      title: lang==='fr' ? '⚙️ Spécifications' : '⚙️ Specifications',
+      html: `<ul>${specs.map(s => `<li>${s}</li>`).join('')}</ul>`
+    });
+  }
+  const accordionEl = document.getElementById('modalAccordion');
+  accordionEl.innerHTML = sections.map((s, i) => `
+    <div class="modal-accordion-item${i===0?' open':''}">
+      <div class="modal-accordion-header" onclick="toggleAccordion(${i})">
+        <span>${s.title}</span>
+        <span class="acc-arrow">+</span>
+      </div>
+      <div class="modal-accordion-content">${s.html}</div>
+    </div>
+  `).join('');
+
   // Variant tabs
   const variantContainer = document.getElementById('modalVariants');
   const variants = getVariants(p);
